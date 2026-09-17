@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Рабочим — 6 разряд: работа по разряду в MAX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0D1014;
+    --ink-2:#171B22;
+    --paper:#F6F5F2;
+    --paper-2:#FFFFFF;
+    --line:#E2E0DA;
+    --line-dark:#2A2F38;
+    --muted:#6B6F78;
+    --muted-dark:#9AA1AC;
+    --amber:#E7952A;
+    --amber-soft:#FBEBD2;
+    --green:#1C7F55;
+    --green-soft:#E3F2EA;
+    --r:14px;
+    --max:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Golos Text',system-ui,sans-serif;
+    background:var(--paper);color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    font-size:17px;line-height:1.5;
+  }
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+  a{color:inherit;text-decoration:none}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .eyebrow.on-dark{color:var(--muted-dark)}
+
+  /* ---------- NAV ---------- */
+  header{position:sticky;top:0;z-index:50;background:rgba(246,245,242,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:66px;gap:24px}
+  .logo{display:flex;align-items:center;gap:11px;font-weight:800;font-size:19px;letter-spacing:-.01em}
+  .logo .mark{
+    width:34px;height:34px;border-radius:9px;background:var(--ink);color:var(--paper);
+    display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:16px;
+    position:relative;
+  }
+  .logo .mark:after{
+    content:"";position:absolute;left:5px;right:5px;bottom:5px;height:3px;border-radius:2px;background:var(--amber);
+  }
+  .nav-links{display:flex;gap:26px;font-size:15px;color:#3A3F48}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-links a[aria-current="page"]{color:var(--ink);font-weight:600}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    height:46px;padding:0 22px;border-radius:11px;font-weight:600;font-size:15.5px;
+    border:1px solid transparent;cursor:pointer;transition:transform .12s ease,box-shadow .15s ease,background .15s;
+    font-family:inherit;
+  }
+  .btn:hover{transform:translateY(-1px)}
+  .btn-ink{background:var(--ink);color:#fff}
+  .btn-ink:hover{box-shadow:0 8px 22px rgba(13,16,20,.22)}
+  .btn-amber{background:var(--amber);color:#231703}
+  .btn-amber:hover{box-shadow:0 8px 22px rgba(231,149,42,.34)}
+  .btn-ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--ink)}
+  .btn-sm{height:40px;padding:0 17px;font-size:14.5px}
+
+  /* ---------- HERO ---------- */
+  .hero{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:64px;align-items:center;padding:74px 0 80px}
+  h1{font-size:clamp(38px,4.4vw,60px);line-height:1.03;letter-spacing:-.028em;font-weight:800;margin:20px 0 22px}
+  h1 em{font-style:normal;white-space:normal;padding:0 .04em;
+    background:linear-gradient(180deg,transparent 56%,var(--amber-soft) 56%,var(--amber-soft) 94%,transparent 94%);
+    -webkit-box-decoration-break:clone;box-decoration-break:clone}
+  .lede{font-size:18.5px;color:#3E434C;max-width:30em}
+  .cta-row{display:flex;gap:12px;margin:32px 0 22px;flex-wrap:wrap}
+  .terms{display:flex;gap:22px;flex-wrap:wrap;font-size:14.5px;color:var(--muted)}
+  .terms span{display:flex;align-items:center;gap:8px}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--amber);flex:none}
+
+  /* ---------- CREDENTIAL CARD ---------- */
+  .cred-stack{position:relative;padding:14px}
+  .cred-stack:before{
+    content:"";position:absolute;inset:26px -6px -6px 26px;border:1px solid var(--line);
+    border-radius:18px;z-index:-1;background:var(--paper-2);
+  }
+  .cred{
+    background:var(--ink);color:#fff;border-radius:18px;padding:26px 26px 22px;
+    box-shadow:0 26px 60px rgba(13,16,20,.24);position:relative;overflow:hidden;
+    transform:rotate(-1.1deg);
+  }
+  .cred:after{
+    content:"";position:absolute;right:-70px;top:-70px;width:200px;height:200px;border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, rgba(231,149,42,.30), transparent 62%);
+  }
+  .cred-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:1px solid var(--line-dark)}
+  .cred-row{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px dashed var(--line-dark)}
+  .cred-row:last-of-type{border-bottom:none}
+  .cred-row dt{font-size:13.5px;color:var(--muted-dark)}
+  .cred-row dd{font-weight:600;font-size:15.5px;text-align:right}
+  .rank-big{font-family:'JetBrains Mono',monospace;font-size:34px;font-weight:700;color:var(--amber);line-height:1}
+  .stamp{
+    display:inline-flex;align-items:center;gap:8px;margin-top:18px;
+    background:rgba(28,127,85,.18);border:1px solid rgba(28,127,85,.5);color:#7FD8AE;
+    padding:8px 14px;border-radius:9px;font-size:13.5px;font-weight:600;
+  }
+  .cred-note{font-size:13px;color:var(--muted-dark);margin-top:12px;line-height:1.45}
+
+  /* ---------- SECTION BASE ---------- */
+  section{padding:78px 0}
+  .sec-head{max-width:44rem;margin-bottom:44px}
+  h2{font-size:clamp(27px,2.7vw,38px);line-height:1.1;letter-spacing:-.022em;font-weight:800;margin:16px 0 14px}
+  .sec-head p{color:#4A4F58;font-size:17.5px}
+
+  /* ---------- STRIP (3 items) ---------- */
+  .strip{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .strip-item{padding:30px 30px 30px 0;border-right:1px solid var(--line)}
+  .strip-item:last-child{border-right:none;padding-right:0}
+  .strip-item+.strip-item{padding-left:30px}
+  .strip-num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--amber);letter-spacing:.1em;margin-bottom:14px}
+  .strip-item h3{font-size:19px;font-weight:700;margin-bottom:9px;letter-spacing:-.012em}
+  .strip-item p{font-size:15.5px;color:#4A4F58}
+
+  /* ---------- RANK TABLE ---------- */
+  .dark{background:var(--ink);color:#fff}
+  .dark h2{color:#fff}
+  .dark .sec-head p{color:#B4BAC4}
+  .ranks{margin-top:6px}
+  .rank-row{display:grid;grid-template-columns:200px 1fr 130px;gap:22px;align-items:center;padding:17px 0;border-bottom:1px solid var(--line-dark)}
+  .rank-row .prof{font-weight:600;font-size:16.5px}
+  .rank-row .note{font-size:14px;color:var(--muted-dark)}
+  .rank-bar{position:relative;height:11px;border-radius:6px;background:#20252E;overflow:hidden}
+  .rank-bar i{position:absolute;top:0;bottom:0;background:linear-gradient(90deg,rgba(231,149,42,.45),var(--amber));border-radius:6px}
+  .rank-row .rng{font-family:'JetBrains Mono',monospace;font-size:14.5px;color:var(--amber);text-align:right}
+  .rank-legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:26px;font-size:13.5px;color:var(--muted-dark)}
+
+  /* ---------- FOUR DOORS ---------- */
+  .doors{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .door{
+    background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r);padding:26px;
+    display:flex;flex-direction:column;gap:12px;transition:border-color .15s,transform .15s,box-shadow .15s;
+  }
+  .door:hover{border-color:#C9C6BE;transform:translateY(-2px);box-shadow:0 14px 34px rgba(13,16,20,.07)}
+  .door-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+  .door h3{font-size:19.5px;font-weight:700;letter-spacing:-.015em}
+  .door p{font-size:15.5px;color:#4A4F58}
+  .door .go{margin-top:auto;font-size:14.5px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:7px}
+  .chip{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;padding:4px 9px;border-radius:999px;background:#EFEDE8;color:#63666E;text-transform:uppercase;white-space:nowrap}
+  .chip.amber{background:var(--amber-soft);color:#8A5A0B}
+
+  /* ---------- STEPS ---------- */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:s}
+  .step{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r);padding:26px}
+  .step .n{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:.1em;margin-bottom:20px;display:block}
+  .step h3{font-size:18px;font-weight:700;margin-bottom:8px}
+  .step p{font-size:15px;color:#4A4F58}
+
+  /* ---------- FORM ---------- */
+  .form-band{background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .form-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:56px;align-items:start}
+  .form-card{border:1px solid var(--line);border-radius:18px;background:var(--paper);padding:30px}
+  .fstep{display:none}
+  .fstep.active{display:block}
+  .fstep-label{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .fstep h3{font-size:22px;font-weight:700;letter-spacing:-.018em;margin-bottom:18px}
+  .opts{display:grid;gap:10px}
+  .opt{
+    text-align:left;background:var(--paper-2);border:1px solid var(--line);border-radius:12px;
+    padding:15px 17px;font-size:16px;font-weight:500;font-family:inherit;cursor:pointer;
+    display:flex;justify-content:space-between;align-items:center;gap:14px;transition:all .12s;
+  }
+  .opt:hover{border-color:var(--ink);background:#fff}
+  .opt.sel{border-color:var(--ink);background:var(--ink);color:#fff}
+  .opt small{font-size:13.5px;color:var(--muted);font-weight:400}
+  .opt.sel small{color:var(--muted-dark)}
+  .fields{display:grid;gap:12px;margin-bottom:18px}
+  .fld{display:grid;gap:6px}
+  .fld label{font-size:13.5px;color:var(--muted);font-weight:500}
+  .fld input,.fld select{
+    height:48px;border:1px solid var(--line);border-radius:11px;background:#fff;
+    padding:0 15px;font-family:inherit;font-size:16px;color:var(--ink);
+  }
+  .fld input:focus,.fld select:focus{outline:2px solid var(--amber);outline-offset:1px;border-color:transparent}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .form-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:6px;flex-wrap:wrap}
+  .form-foot .note{font-size:13px;color:var(--muted);max-width:22em}
+  .back{border:none;background:none;font-family:inherit;font-size:14.5px;color:var(--muted);cursor:pointer;padding:6px 0}
+  .back:hover{color:var(--ink)}
+  .done{display:none;text-align:left}
+  .done.active{display:block}
+  .done .tick{width:44px;height:44px;border-radius:50%;background:var(--green-soft);color:var(--green);display:grid;place-items:center;font-size:22px;margin-bottom:16px}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--ink);color:#fff;padding:56px 0 34px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+  .foot-grid h4{font-size:13.5px;color:var(--muted-dark);font-weight:500;margin-bottom:14px}
+  .foot-grid a,.foot-grid p{font-size:15.5px;color:#D5D9DF;display:block;margin-bottom:9px}
+  .foot-grid a:hover{color:#fff}
+  .foot-bot{border-top:1px solid var(--line-dark);margin-top:38px;padding-top:20px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:13.5px;color:var(--muted-dark)}
+  .foot-brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:19px;margin-bottom:16px}
+  .foot-brand .mark{width:34px;height:34px;border-radius:9px;background:var(--amber);color:#231703;display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-weight:700}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:980px){
+    .hero{grid-template-columns:1fr;gap:44px;padding:44px 0 56px}
+    header .nav{flex-wrap:wrap;height:auto;padding-top:12px;padding-bottom:12px;gap:12px}
+    .nav-links{display:flex;order:3;width:100%;gap:16px;font-size:14.5px;overflow-x:auto;
+      padding:2px 0 6px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .nav-links::-webkit-scrollbar{display:none}
+    .nav-links a{white-space:nowrap;padding:12px 0;border-bottom:2px solid transparent}
+    .nav-links a:active{border-bottom-color:var(--amber)}
+    header .btn-sm{height:42px;padding:0 15px;font-size:14px}
+    footer .foot-grid a{padding:12px 0}
+    footer .foot-grid p{margin-bottom:12px}
+    .linkbtn{padding:10px 0}
+    .strip{grid-template-columns:1fr;border-bottom:none}
+    .strip-item{border-right:none;border-bottom:1px solid var(--line);padding:24px 0}
+    .strip-item+.strip-item{padding-left:0}
+    .doors,.steps{grid-template-columns:1fr}
+    .form-grid{grid-template-columns:1fr;gap:32px}
+    .rank-row{grid-template-columns:1fr;gap:8px;padding:15px 0}
+    .rank-row .rng{text-align:left}
+    .foot-grid{grid-template-columns:1fr;gap:28px}
+  }
+  @media (max-width:560px){
+    body{font-size:16px}
+    .wrap{padding:0 18px}
+    section{padding:52px 0}
+    .cred{transform:none;padding:22px}
+    .field-row{grid-template-columns:1fr}
+    .form-card{padding:20px}
+    .cta-row .btn{width:100%}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+  /* мобильные цели нажатия: добиваем до комфортного размера */
+  @media (max-width:980px){
+    header .logo{min-height:44px;display:flex;align-items:center}
+    .dash .seg button{padding:12px 14px;font-size:13.5px}
+    .linkbtn{display:inline-block;min-height:44px;padding:12px 0}
+    footer .foot-grid a{min-height:44px;display:flex;align-items:center}
+  }
+  /* слой доверия */
+  .promise{display:flex;gap:12px;align-items:flex-start;font-size:17.5px;font-weight:600;max-width:36em;margin:0 0 26px;line-height:1.4}
+  .promise i{width:10px;height:10px;border-radius:3px;background:var(--amber);flex:none;margin-top:8px}
+  .trust{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+  .tcard .n{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--amber);letter-spacing:.1em;display:block;margin-bottom:12px}
+  .tcard h3{font-size:18.5px;font-weight:700;margin-bottom:9px;letter-spacing:-.014em}
+  .tcard p{font-size:15.5px;color:#4A4F58}
+  .tcard ul{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+  .tcard li{font-size:15px;color:#4A4F58;display:flex;gap:9px}
+  .tcard li:before{content:"·";color:var(--amber);font-weight:700}
+  .risk{background:var(--ink);color:#fff;border-radius:18px;padding:30px;margin-top:16px}
+  .risk .rrow{padding:18px 0;border-bottom:1px solid var(--line-dark);display:grid;grid-template-columns:1fr 1.15fr;gap:24px}
+  .risk .rrow:first-child{padding-top:0}
+  .risk .rrow:last-child{border-bottom:none;padding-bottom:0}
+  .risk h4{font-size:17.5px;font-weight:700;margin-bottom:6px}
+  .risk .lbl{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8E96A2}
+  .risk p{font-size:15.5px;color:#B4BAC4}
+  .risk p b{color:#F0B463}
+  .confirm{opacity:0;transition:opacity .4s}
+  .confirm.on{opacity:1}
+  @media (max-width:980px){.trust,.trio{grid-template-columns:1fr}.risk{padding:22px}.risk .rrow{grid-template-columns:1fr;gap:10px}}
+</style>
+<style>
+/* --- общие блоки для всех страниц: развилка, чат, технология, FAQ, страница рабочего --- */
+.forks{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.fork{background:var(--paper-2);border:1px solid var(--line);border-radius:18px;padding:30px;display:flex;flex-direction:column;gap:13px;transition:transform .15s,border-color .15s,box-shadow .15s}
+.fork:hover{border-color:#C9C6BE;transform:translateY(-3px);box-shadow:0 16px 38px rgba(13,16,20,.08)}
+.fork .who{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.fork h3{font-size:25px;font-weight:800;letter-spacing:-.024em;line-height:1.1}
+.fork p{font-size:15.5px;color:#4A4F58}
+.fork .go{margin-top:auto;display:flex;align-items:center;gap:9px;font-weight:600;font-size:15.5px;padding-top:6px}
+.fork.hi{background:var(--ink);border-color:var(--ink)}
+.fork.hi .who{color:var(--muted-dark)}
+.fork.hi h3{color:#fff}
+.fork.hi p{color:#B4BAC4}
+.fork.hi .go{color:var(--amber)}
+
+.tech{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.tech-item{background:var(--ink-2);border:1px solid var(--line-dark);border-radius:var(--r);padding:26px}
+.tech-item .n{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--amber);letter-spacing:.1em;display:block;margin-bottom:14px}
+.tech-item h3{font-size:19px;font-weight:700;letter-spacing:-.015em;margin-bottom:9px}
+.tech-item p{font-size:15.5px;color:#B4BAC4}
+.claim{border-top:1px solid var(--line-dark);margin-top:34px;padding-top:24px;font-size:17px;color:#D5D9DF;max-width:52em}
+.claim b{color:#fff}
+
+.chat{background:var(--ink);border-radius:18px;padding:22px;color:#fff}
+.chat-head{display:flex;align-items:center;gap:11px;padding-bottom:16px;border-bottom:1px solid var(--line-dark);margin-bottom:16px}
+.chat-ava{width:34px;height:34px;border-radius:50%;background:var(--amber);color:#231703;display:grid;place-items:center;font-weight:700;font-size:15px;flex:none}
+.chat-name{font-weight:600;font-size:15.5px}
+.chat-sub{font-size:12.5px;color:var(--muted-dark)}
+.bub{border-radius:14px;padding:12px 15px;font-size:15px;line-height:1.45;margin-bottom:10px;max-width:92%}
+.bub.bot{background:#20252E;color:#E6E9EE;border-bottom-left-radius:5px}
+.bub.me{background:var(--amber);color:#231703;margin-left:auto;border-bottom-right-radius:5px;font-weight:500}
+.bub .btnline{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+.bub .kb{background:#2C323C;color:#E6E9EE;border-radius:9px;padding:7px 12px;font-size:13.5px}
+.chat-cap{font-size:13.5px;color:var(--muted);margin-top:12px;line-height:1.5}
+
+.faq{border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;padding:22px 0;display:flex;justify-content:space-between;gap:20px;align-items:flex-start;font-size:18px;font-weight:600;letter-spacing:-.012em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";font-family:'JetBrains Mono',monospace;font-size:22px;color:var(--amber);line-height:1;flex:none}
+.faq details[open] summary:after{content:"–"}
+.faq .ans{padding:0 0 24px;max-width:52em;color:#4A4F58;font-size:16.5px}
+
+/* --- страница рабочего --- */
+.bigbtn{height:60px;font-size:17.5px;border-radius:14px;padding:0 30px}
+.qrbox{border:1px dashed #D6D2CA;border-radius:18px;padding:28px;text-align:center;background:var(--paper-2)}
+.qrph{width:156px;height:156px;margin:0 auto 16px;border-radius:16px;display:grid;place-items:center;
+  background:repeating-linear-gradient(45deg,#EDEAE4,#EDEAE4 9px,#F7F6F3 9px,#F7F6F3 18px);
+  font-family:'JetBrains Mono',monospace;font-size:12px;color:#8A8578;line-height:1.4}
+.notes3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.note-card{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.note-card h3{font-size:17.5px;font-weight:700;margin-bottom:8px}
+.note-card p{font-size:15px;color:#4A4F58}
+.wmini{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.wmini-item{padding:26px 26px 26px 0;border-right:1px solid var(--line)}
+.wmini-item+.wmini-item{padding-left:26px}
+.wmini-item:last-child{border-right:none;padding-right:0}
+.wmini-item .n{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--amber);letter-spacing:.1em;display:block;margin-bottom:12px}
+.wmini-item h3{font-size:17.5px;font-weight:700;margin-bottom:8px}
+.wmini-item p{font-size:15px;color:#4A4F58}
+
+@media (max-width:980px){
+  .forks,.tech,.notes3,.wmini{grid-template-columns:1fr}
+  .wmini-item{border-right:none;border-bottom:1px solid var(--line);padding:20px 0}
+  .wmini-item+.wmini-item{padding-left:0}
+  .faq summary{font-size:16.5px}
+}
+
+</style>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#101318">
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="/" class="logo" aria-label="6 разряд — на главную"><span class="mark">6</span> 6разряд</a>
+    <nav class="nav-links">
+      <a href="/">Главная</a>
+      <a href="/employers/">Работодателям</a>
+      <a href="/colleges/">Колледжам</a>
+      <a href="/workers/" aria-current="page">Рабочим</a>
+    </nav>
+    <a href="https://max.ru/id301611892756_1_bot" target="_blank" rel="noopener" class="btn btn-amber btn-sm">Открыть бота в MAX</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Рабочим · бесплатно</div>
+      <h1>Работа по твоему <em>разряду</em> — в MAX</h1>
+      <p class="lede">Сварщик, монтажник, электромонтёр, крановщик. Напиши в бота профессию и телефон — пришлём вакансии под твой разряд, допуски и регион. Без резюме и анкет.</p>
+      <div class="cta-row">
+        <a href="https://max.ru/id301611892756_1_bot" target="_blank" rel="noopener" class="btn btn-amber bigbtn">Открыть бота в MAX</a>
+        <a href="#how" class="btn btn-ghost">Как это работает</a>
+      </div>
+      <div class="terms">
+        <span><i class="dot"></i> бесплатно для рабочего</span>
+        <span><i class="dot"></i> деньги платит работодатель</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="chat">
+        <div class="chat-head">
+          <div class="chat-ava">П</div>
+          <div>
+            <div class="chat-name">Профессионал</div>
+            <div class="chat-sub">бот в MAX</div>
+          </div>
+        </div>
+        <div class="bub bot">Кто вы по профессии?
+          <div class="btnline"><span class="kb">Сварщик</span><span class="kb">Монтажник</span><span class="kb">Электромонтёр</span><span class="kb">Другая</span></div>
+        </div>
+        <div class="bub me">Я сварщик, 5 разряд, НАКС есть — хочу вахту, Тюмень</div>
+        <div class="bub bot">Записал: <b>сварщик · 5 разряд · НАКС · вахта · Тюмень</b>. Вот что есть под твой разряд:
+          <div class="btnline"><span class="kb">3 вакансии с зарплатой</span></div>
+        </div>
+      </div>
+      <p class="chat-cap">Писать можно свободным текстом или голосом. Кнопки — только подсказка.</p>
+    </div>
+  </div>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Как это работает</div>
+      <h2>Три шага — и вакансии у тебя</h2>
+    </div>
+    <div class="wmini">
+      <div class="wmini-item">
+        <span class="n">ШАГ 01</span>
+        <h3>Напиши профессию</h3>
+        <p>Одной строкой или голосом: «сварщик 5 разряд, НАКС, хочу вахту». Разряд и допуски возьми из удостоверения.</p>
+      </div>
+      <div class="wmini-item">
+        <span class="n">ШАГ 02</span>
+        <h3>Пришли телефон</h3>
+        <p>Одной кнопкой в боте. Нужен, чтобы работодатель мог позвонить по вакансии.</p>
+      </div>
+      <div class="wmini-item">
+        <span class="n">ШАГ 03</span>
+        <h3>Получай вакансии</h3>
+        <p>Под твой разряд, допуски и регион. Хочешь вахту — покажем вахту, хочешь только свой город — будем искать рядом.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Тебе не кинут</div>
+      <h2>Четыре вещи, за которые отвечаем мы</h2>
+    </div>
+    <div class="trust">
+      <div class="tcard">
+        <span class="n">УСЛОВИЯ</span>
+        <h3>Тебя не кинут на деньгах</h3>
+        <p>Условия фиксируем до выезда: зарплата, разряд, вахта, жильё, суточные, дата. Если на объекте оказалось иначе — напиши в бота, разбираемся мы, а не ты.</p>
+      </div>
+      <div class="tcard">
+        <span class="n">РАЗРЯД</span>
+        <h3>Разряд признают</h3>
+        <p>Подбираем вакансии под твой разряд и допуски. Если работа не соответствует заявленному — сообщи, это уходит работодателю в минус, а не тебе.</p>
+      </div>
+      <div class="tcard">
+        <span class="n">ДАННЫЕ</span>
+        <h3>Не разойдутся по спаму</h3>
+        <p>Твой профиль видит только тот работодатель, которому ты подходишь. «Стоп» — вакансии больше не приходят, «удалить» — удаляем всё.</p>
+      </div>
+      <div class="tcard">
+        <span class="n">ДЕНЬГИ</span>
+        <h3>Сервис для тебя полностью бесплатный</h3>
+        <p>Ты не платишь ни за подбор, ни за вакансии, ни за «премиум-доступ». Платит работодатель — и только когда ты вышел на работу.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0" id="bot">
+  <div class="wrap">
+    <div class="qrbox">
+      <img src="/bot-qr.png" alt="QR-код бота «Профессионал» в MAX" width="180" height="180" style="border-radius:16px;border:1px solid #E7E4DD;background:#fff;padding:10px;margin-bottom:18px">
+      <h2 style="font-size:26px;margin-bottom:10px">Открывай бота в MAX</h2>
+      <p style="color:#4A4F58;max-width:34em;margin:0 auto 22px">Работает в мессенджере MAX — он есть у тебя на телефоне. Логин и пароль не нужны, регистрация не нужна.</p>
+      <a href="https://max.ru/id301611892756_1_bot" target="_blank" rel="noopener" class="btn btn-amber bigbtn" style="display:inline-flex">Открыть бота в MAX</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand"><span class="mark">6</span> 6разряд</div>
+        <p style="max-width:26em;color:#B4BAC4;font-size:15px">AI-платформа найма квалифицированных рабочих для строительной отрасли. Разряд и допуски подтверждены документом. 6razryad.ru</p>
+      </div>
+      <div>
+        <h4>Разделы</h4>
+        <a href="/">Главная</a>
+        <a href="/employers/">Работодателям</a>
+        <a href="/colleges/">Колледжам</a>
+      </div>
+      <div>
+        <h4>Связаться</h4>
+        <a href="tel:+79253560809">8 925 356-08-09</a>
+        <a href="https://t.me/khayrbek">тг. @khayrbek</a>
+        <a href="#">Политика обработки данных</a>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2026 · ООО «6разряд»</span>
+      <span class="mono">6razryad.ru/workers</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

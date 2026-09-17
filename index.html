@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6 разряд — AI-платформа найма квалифицированных рабочих для строительной отрасли</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0D1014;
+    --ink-2:#171B22;
+    --paper:#F6F5F2;
+    --paper-2:#FFFFFF;
+    --line:#E2E0DA;
+    --line-dark:#2A2F38;
+    --muted:#6B6F78;
+    --muted-dark:#9AA1AC;
+    --amber:#E7952A;
+    --amber-soft:#FBEBD2;
+    --green:#1C7F55;
+    --green-soft:#E3F2EA;
+    --r:14px;
+    --max:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Golos Text',system-ui,sans-serif;
+    background:var(--paper);color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    font-size:17px;line-height:1.5;
+  }
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+  a{color:inherit;text-decoration:none}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .eyebrow.on-dark{color:var(--muted-dark)}
+
+  /* ---------- NAV ---------- */
+  header{position:sticky;top:0;z-index:50;background:rgba(246,245,242,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:66px;gap:24px}
+  .logo{display:flex;align-items:center;gap:11px;font-weight:800;font-size:19px;letter-spacing:-.01em}
+  .logo .mark{
+    width:34px;height:34px;border-radius:9px;background:var(--ink);color:var(--paper);
+    display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:16px;
+    position:relative;
+  }
+  .logo .mark:after{
+    content:"";position:absolute;left:5px;right:5px;bottom:5px;height:3px;border-radius:2px;background:var(--amber);
+  }
+  .nav-links{display:flex;gap:26px;font-size:15px;color:#3A3F48}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-links a[aria-current="page"]{color:var(--ink);font-weight:600}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    height:46px;padding:0 22px;border-radius:11px;font-weight:600;font-size:15.5px;
+    border:1px solid transparent;cursor:pointer;transition:transform .12s ease,box-shadow .15s ease,background .15s;
+    font-family:inherit;
+  }
+  .btn:hover{transform:translateY(-1px)}
+  .btn-ink{background:var(--ink);color:#fff}
+  .btn-ink:hover{box-shadow:0 8px 22px rgba(13,16,20,.22)}
+  .btn-amber{background:var(--amber);color:#231703}
+  .btn-amber:hover{box-shadow:0 8px 22px rgba(231,149,42,.34)}
+  .btn-ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--ink)}
+  .btn-sm{height:40px;padding:0 17px;font-size:14.5px}
+
+  /* ---------- HERO ---------- */
+  .hero{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:64px;align-items:center;padding:74px 0 80px}
+  h1{font-size:clamp(38px,4.4vw,60px);line-height:1.03;letter-spacing:-.028em;font-weight:800;margin:20px 0 22px}
+  h1 em{font-style:normal;white-space:normal;padding:0 .04em;
+    background:linear-gradient(180deg,transparent 56%,var(--amber-soft) 56%,var(--amber-soft) 94%,transparent 94%);
+    -webkit-box-decoration-break:clone;box-decoration-break:clone}
+  .lede{font-size:18.5px;color:#3E434C;max-width:30em}
+  .cta-row{display:flex;gap:12px;margin:32px 0 22px;flex-wrap:wrap}
+  .terms{display:flex;gap:22px;flex-wrap:wrap;font-size:14.5px;color:var(--muted)}
+  .terms span{display:flex;align-items:center;gap:8px}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--amber);flex:none}
+
+  /* ---------- CREDENTIAL CARD ---------- */
+  .cred-stack{position:relative;padding:14px}
+  .cred-stack:before{
+    content:"";position:absolute;inset:26px -6px -6px 26px;border:1px solid var(--line);
+    border-radius:18px;z-index:-1;background:var(--paper-2);
+  }
+  .cred{
+    background:var(--ink);color:#fff;border-radius:18px;padding:26px 26px 22px;
+    box-shadow:0 26px 60px rgba(13,16,20,.24);position:relative;overflow:hidden;
+    transform:rotate(-1.1deg);
+  }
+  .cred:after{
+    content:"";position:absolute;right:-70px;top:-70px;width:200px;height:200px;border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, rgba(231,149,42,.30), transparent 62%);
+  }
+  .cred-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:1px solid var(--line-dark)}
+  .cred-row{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px dashed var(--line-dark)}
+  .cred-row:last-of-type{border-bottom:none}
+  .cred-row dt{font-size:13.5px;color:var(--muted-dark)}
+  .cred-row dd{font-weight:600;font-size:15.5px;text-align:right}
+  .rank-big{font-family:'JetBrains Mono',monospace;font-size:34px;font-weight:700;color:var(--amber);line-height:1}
+  .stamp{
+    display:inline-flex;align-items:center;gap:8px;margin-top:18px;
+    background:rgba(28,127,85,.18);border:1px solid rgba(28,127,85,.5);color:#7FD8AE;
+    padding:8px 14px;border-radius:9px;font-size:13.5px;font-weight:600;
+  }
+  .cred-note{font-size:13px;color:var(--muted-dark);margin-top:12px;line-height:1.45}
+
+  /* ---------- SECTION BASE ---------- */
+  section{padding:78px 0}
+  .sec-head{max-width:44rem;margin-bottom:44px}
+  h2{font-size:clamp(27px,2.7vw,38px);line-height:1.1;letter-spacing:-.022em;font-weight:800;margin:16px 0 14px}
+  .sec-head p{color:#4A4F58;font-size:17.5px}
+
+  /* ---------- STRIP (3 items) ---------- */
+  .strip{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .strip-item{padding:30px 30px 30px 0;border-right:1px solid var(--line)}
+  .strip-item:last-child{border-right:none;padding-right:0}
+  .strip-item+.strip-item{padding-left:30px}
+  .strip-num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--amber);letter-spacing:.1em;margin-bottom:14px}
+  .strip-item h3{font-size:19px;font-weight:700;margin-bottom:9px;letter-spacing:-.012em}
+  .strip-item p{font-size:15.5px;color:#4A4F58}
+
+  /* ---------- RANK TABLE ---------- */
+  .dark{background:var(--ink);color:#fff}
+  .dark h2{color:#fff}
+  .dark .sec-head p{color:#B4BAC4}
+  .ranks{margin-top:6px}
+  .rank-row{display:grid;grid-template-columns:200px 1fr 130px;gap:22px;align-items:center;padding:17px 0;border-bottom:1px solid var(--line-dark)}
+  .rank-row .prof{font-weight:600;font-size:16.5px}
+  .rank-row .note{font-size:14px;color:var(--muted-dark)}
+  .rank-bar{position:relative;height:11px;border-radius:6px;background:#20252E;overflow:hidden}
+  .rank-bar i{position:absolute;top:0;bottom:0;background:linear-gradient(90deg,rgba(231,149,42,.45),var(--amber));border-radius:6px}
+  .rank-row .rng{font-family:'JetBrains Mono',monospace;font-size:14.5px;color:var(--amber);text-align:right}
+  .rank-legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:26px;font-size:13.5px;color:var(--muted-dark)}
+
+  /* ---------- FOUR DOORS ---------- */
+  .doors{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .door{
+    background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r);padding:26px;
+    display:flex;flex-direction:column;gap:12px;transition:border-color .15s,transform .15s,box-shadow .15s;
+  }
+  .door:hover{border-color:#C9C6BE;transform:translateY(-2px);box-shadow:0 14px 34px rgba(13,16,20,.07)}
+  .door-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+  .door h3{font-size:19.5px;font-weight:700;letter-spacing:-.015em}
+  .door p{font-size:15.5px;color:#4A4F58}
+  .door .go{margin-top:auto;font-size:14.5px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:7px}
+  .chip{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;padding:4px 9px;border-radius:999px;background:#EFEDE8;color:#63666E;text-transform:uppercase;white-space:nowrap}
+  .chip.amber{background:var(--amber-soft);color:#8A5A0B}
+
+  /* ---------- STEPS ---------- */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:s}
+  .step{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r);padding:26px}
+  .step .n{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:.1em;margin-bottom:20px;display:block}
+  .step h3{font-size:18px;font-weight:700;margin-bottom:8px}
+  .step p{font-size:15px;color:#4A4F58}
+
+  /* ---------- FORM ---------- */
+  .form-band{background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .form-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:56px;align-items:start}
+  .form-card{border:1px solid var(--line);border-radius:18px;background:var(--paper);padding:30px}
+  .fstep{display:none}
+  .fstep.active{display:block}
+  .fstep-label{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .fstep h3{font-size:22px;font-weight:700;letter-spacing:-.018em;margin-bottom:18px}
+  .opts{display:grid;gap:10px}
+  .opt{
+    text-align:left;background:var(--paper-2);border:1px solid var(--line);border-radius:12px;
+    padding:15px 17px;font-size:16px;font-weight:500;font-family:inherit;cursor:pointer;
+    display:flex;justify-content:space-between;align-items:center;gap:14px;transition:all .12s;
+  }
+  .opt:hover{border-color:var(--ink);background:#fff}
+  .opt.sel{border-color:var(--ink);background:var(--ink);color:#fff}
+  .opt small{font-size:13.5px;color:var(--muted);font-weight:400}
+  .opt.sel small{color:var(--muted-dark)}
+  .fields{display:grid;gap:12px;margin-bottom:18px}
+  .fld{display:grid;gap:6px}
+  .fld label{font-size:13.5px;color:var(--muted);font-weight:500}
+  .fld input,.fld select{
+    height:48px;border:1px solid var(--line);border-radius:11px;background:#fff;
+    padding:0 15px;font-family:inherit;font-size:16px;color:var(--ink);
+  }
+  .fld input:focus,.fld select:focus{outline:2px solid var(--amber);outline-offset:1px;border-color:transparent}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .form-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:6px;flex-wrap:wrap}
+  .form-foot .note{font-size:13px;color:var(--muted);max-width:22em}
+  .back{border:none;background:none;font-family:inherit;font-size:14.5px;color:var(--muted);cursor:pointer;padding:6px 0}
+  .back:hover{color:var(--ink)}
+  .done{display:none;text-align:left}
+  .done.active{display:block}
+  .done .tick{width:44px;height:44px;border-radius:50%;background:var(--green-soft);color:var(--green);display:grid;place-items:center;font-size:22px;margin-bottom:16px}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--ink);color:#fff;padding:56px 0 34px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+  .foot-grid h4{font-size:13.5px;color:var(--muted-dark);font-weight:500;margin-bottom:14px}
+  .foot-grid a,.foot-grid p{font-size:15.5px;color:#D5D9DF;display:block;margin-bottom:9px}
+  .foot-grid a:hover{color:#fff}
+  .foot-bot{border-top:1px solid var(--line-dark);margin-top:38px;padding-top:20px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:13.5px;color:var(--muted-dark)}
+  .foot-brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:19px;margin-bottom:16px}
+  .foot-brand .mark{width:34px;height:34px;border-radius:9px;background:var(--amber);color:#231703;display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-weight:700}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:980px){
+    .hero{grid-template-columns:1fr;gap:44px;padding:44px 0 56px}
+    header .nav{flex-wrap:wrap;height:auto;padding-top:12px;padding-bottom:12px;gap:12px}
+    .nav-links{display:flex;order:3;width:100%;gap:16px;font-size:14.5px;overflow-x:auto;
+      padding:2px 0 6px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .nav-links::-webkit-scrollbar{display:none}
+    .nav-links a{white-space:nowrap;padding:12px 0;border-bottom:2px solid transparent}
+    .nav-links a:active{border-bottom-color:var(--amber)}
+    header .btn-sm{height:42px;padding:0 15px;font-size:14px}
+    footer .foot-grid a{padding:12px 0}
+    footer .foot-grid p{margin-bottom:12px}
+    .linkbtn{padding:10px 0}
+    .strip{grid-template-columns:1fr;border-bottom:none}
+    .strip-item{border-right:none;border-bottom:1px solid var(--line);padding:24px 0}
+    .strip-item+.strip-item{padding-left:0}
+    .doors,.steps{grid-template-columns:1fr}
+    .form-grid{grid-template-columns:1fr;gap:32px}
+    .rank-row{grid-template-columns:1fr;gap:8px;padding:15px 0}
+    .rank-row .rng{text-align:left}
+    .foot-grid{grid-template-columns:1fr;gap:28px}
+  }
+  @media (max-width:560px){
+    body{font-size:16px}
+    .wrap{padding:0 18px}
+    section{padding:52px 0}
+    .cred{transform:none;padding:22px}
+    .field-row{grid-template-columns:1fr}
+    .form-card{padding:20px}
+    .cta-row .btn{width:100%}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+  /* мобильные цели нажатия: добиваем до комфортного размера */
+  @media (max-width:980px){
+    header .logo{min-height:44px;display:flex;align-items:center}
+    .dash .seg button{padding:12px 14px;font-size:13.5px}
+    .linkbtn{display:inline-block;min-height:44px;padding:12px 0}
+    footer .foot-grid a{min-height:44px;display:flex;align-items:center}
+  }
+  /* слой доверия */
+  .promise{display:flex;gap:12px;align-items:flex-start;font-size:17.5px;font-weight:600;max-width:36em;margin:0 0 26px;line-height:1.4}
+  .promise i{width:10px;height:10px;border-radius:3px;background:var(--amber);flex:none;margin-top:8px}
+  .trust{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+  .tcard .n{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--amber);letter-spacing:.1em;display:block;margin-bottom:12px}
+  .tcard h3{font-size:18.5px;font-weight:700;margin-bottom:9px;letter-spacing:-.014em}
+  .tcard p{font-size:15.5px;color:#4A4F58}
+  .tcard ul{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+  .tcard li{font-size:15px;color:#4A4F58;display:flex;gap:9px}
+  .tcard li:before{content:"·";color:var(--amber);font-weight:700}
+  .risk{background:var(--ink);color:#fff;border-radius:18px;padding:30px;margin-top:16px}
+  .risk .rrow{padding:18px 0;border-bottom:1px solid var(--line-dark);display:grid;grid-template-columns:1fr 1.15fr;gap:24px}
+  .risk .rrow:first-child{padding-top:0}
+  .risk .rrow:last-child{border-bottom:none;padding-bottom:0}
+  .risk h4{font-size:17.5px;font-weight:700;margin-bottom:6px}
+  .risk .lbl{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8E96A2}
+  .risk p{font-size:15.5px;color:#B4BAC4}
+  .risk p b{color:#F0B463}
+  .confirm{opacity:0;transition:opacity .4s}
+  .confirm.on{opacity:1}
+  @media (max-width:980px){.trust,.trio{grid-template-columns:1fr}.risk{padding:22px}.risk .rrow{grid-template-columns:1fr;gap:10px}}
+</style>
+<style>
+/* --- общие блоки для всех страниц: развилка, чат, технология, FAQ, страница рабочего --- */
+.forks{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.fork{background:var(--paper-2);border:1px solid var(--line);border-radius:18px;padding:30px;display:flex;flex-direction:column;gap:13px;transition:transform .15s,border-color .15s,box-shadow .15s}
+.fork:hover{border-color:#C9C6BE;transform:translateY(-3px);box-shadow:0 16px 38px rgba(13,16,20,.08)}
+.fork .who{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.fork h3{font-size:25px;font-weight:800;letter-spacing:-.024em;line-height:1.1}
+.fork p{font-size:15.5px;color:#4A4F58}
+.fork .go{margin-top:auto;display:flex;align-items:center;gap:9px;font-weight:600;font-size:15.5px;padding-top:6px}
+.fork.hi{background:var(--ink);border-color:var(--ink)}
+.fork.hi .who{color:var(--muted-dark)}
+.fork.hi h3{color:#fff}
+.fork.hi p{color:#B4BAC4}
+.fork.hi .go{color:var(--amber)}
+
+.tech{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.tech-item{background:var(--ink-2);border:1px solid var(--line-dark);border-radius:var(--r);padding:26px}
+.tech-item .n{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--amber);letter-spacing:.1em;display:block;margin-bottom:14px}
+.tech-item h3{font-size:19px;font-weight:700;letter-spacing:-.015em;margin-bottom:9px}
+.tech-item p{font-size:15.5px;color:#B4BAC4}
+.claim{border-top:1px solid var(--line-dark);margin-top:34px;padding-top:24px;font-size:17px;color:#D5D9DF;max-width:52em}
+.claim b{color:#fff}
+
+.chat{background:var(--ink);border-radius:18px;padding:22px;color:#fff}
+.chat-head{display:flex;align-items:center;gap:11px;padding-bottom:16px;border-bottom:1px solid var(--line-dark);margin-bottom:16px}
+.chat-ava{width:34px;height:34px;border-radius:50%;background:var(--amber);color:#231703;display:grid;place-items:center;font-weight:700;font-size:15px;flex:none}
+.chat-name{font-weight:600;font-size:15.5px}
+.chat-sub{font-size:12.5px;color:var(--muted-dark)}
+.bub{border-radius:14px;padding:12px 15px;font-size:15px;line-height:1.45;margin-bottom:10px;max-width:92%}
+.bub.bot{background:#20252E;color:#E6E9EE;border-bottom-left-radius:5px}
+.bub.me{background:var(--amber);color:#231703;margin-left:auto;border-bottom-right-radius:5px;font-weight:500}
+.bub .btnline{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+.bub .kb{background:#2C323C;color:#E6E9EE;border-radius:9px;padding:7px 12px;font-size:13.5px}
+.chat-cap{font-size:13.5px;color:var(--muted);margin-top:12px;line-height:1.5}
+
+.faq{border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;padding:22px 0;display:flex;justify-content:space-between;gap:20px;align-items:flex-start;font-size:18px;font-weight:600;letter-spacing:-.012em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";font-family:'JetBrains Mono',monospace;font-size:22px;color:var(--amber);line-height:1;flex:none}
+.faq details[open] summary:after{content:"–"}
+.faq .ans{padding:0 0 24px;max-width:52em;color:#4A4F58;font-size:16.5px}
+
+/* --- страница рабочего --- */
+.bigbtn{height:60px;font-size:17.5px;border-radius:14px;padding:0 30px}
+.qrbox{border:1px dashed #D6D2CA;border-radius:18px;padding:28px;text-align:center;background:var(--paper-2)}
+.qrph{width:156px;height:156px;margin:0 auto 16px;border-radius:16px;display:grid;place-items:center;
+  background:repeating-linear-gradient(45deg,#EDEAE4,#EDEAE4 9px,#F7F6F3 9px,#F7F6F3 18px);
+  font-family:'JetBrains Mono',monospace;font-size:12px;color:#8A8578;line-height:1.4}
+.notes3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.note-card{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.note-card h3{font-size:17.5px;font-weight:700;margin-bottom:8px}
+.note-card p{font-size:15px;color:#4A4F58}
+.wmini{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.wmini-item{padding:26px 26px 26px 0;border-right:1px solid var(--line)}
+.wmini-item+.wmini-item{padding-left:26px}
+.wmini-item:last-child{border-right:none;padding-right:0}
+.wmini-item .n{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--amber);letter-spacing:.1em;display:block;margin-bottom:12px}
+.wmini-item h3{font-size:17.5px;font-weight:700;margin-bottom:8px}
+.wmini-item p{font-size:15px;color:#4A4F58}
+
+@media (max-width:980px){
+  .forks,.tech,.notes3,.wmini{grid-template-columns:1fr}
+  .wmini-item{border-right:none;border-bottom:1px solid var(--line);padding:20px 0}
+  .wmini-item+.wmini-item{padding-left:0}
+  .faq summary{font-size:16.5px}
+}
+
+</style>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#101318">
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="/" class="logo" aria-label="6 разряд — на главную"><span class="mark">6</span> 6разряд</a>
+    <nav class="nav-links">
+      <a href="/" aria-current="page">Главная</a>
+      <a href="/employers/">Работодателям</a>
+      <a href="/colleges/">Колледжам</a>
+      <a href="/workers/">Рабочим</a>
+    </nav>
+    <a href="#zayavka" class="btn btn-ink btn-sm">Оставить заявку</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">AI-платформа найма квалифицированных рабочих для строительной отрасли</div>
+      <h1>Рабочие с <em>подтверждённым</em> разрядом и допусками</h1>
+      <p class="lede">Сварщики, монтажники, электромонтёры, крановщики. Мы сопоставляем человека и вакансию по профессии, разряду и допускам — и ведём до выхода на объект. Работодателю, колледжу и рабочему у нас своя дорога.</p>
+      <p class="promise"><i></i> Мы отвечаем за то, что обе стороны получат то, о чём договорились.</p>
+      <div class="cta-row">
+        <a href="#zayavka" class="btn btn-amber">Оставить заявку</a>
+        <a href="#fork" class="btn btn-ghost">Выбрать раздел</a>
+      </div>
+      <div class="terms">
+        <span><i class="dot"></i> без оплаты за отклики</span>
+        <span><i class="dot"></i> платите за вышедшего на работу</span>
+      </div>
+    </div>
+
+    <div class="cred-stack">
+      <div class="cred">
+        <div class="cred-head">
+          <span class="mono" style="font-size:11.5px;letter-spacing:.14em;color:#9AA1AC">КАРТОЧКА РАБОЧЕГО</span>
+          <span class="mono" style="font-size:11.5px;color:#9AA1AC">№ 000-000</span>
+        </div>
+        <dl>
+          <div class="cred-row"><dt>Профессия</dt><dd>Сварщик</dd></div>
+          <div class="cred-row"><dt>Разряд</dt><dd class="rank-big">5</dd></div>
+          <div class="cred-row"><dt>Допуски</dt><dd>НАКС НГДО, высота</dd></div>
+          <div class="cred-row"><dt>Опыт</dt><dd>9 лет</dd></div>
+          <div class="cred-row"><dt>Формат</dt><dd>Вахта · Тюмень</dd></div>
+        </dl>
+        <div class="stamp">✓ Разряд сверен с удостоверением</div>
+        <p class="cred-note">Матчинг идёт в три измерения: профессия → разряд → допуски. Сварщик 5 разряда с НАКС и сварщик 3 разряда без допуска — разные деньги и разные объекты.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Что мы делаем</div>
+      <h2>Не база резюме, а инструмент отбора</h2>
+      <p>Три вещи, которые доска объявлений не делает и не будет: не проверяет документ, не сопоставляет разряд с допусками, не считает рынок.</p>
+    </div>
+    <div class="strip">
+      <div class="strip-item">
+        <div class="strip-num">01 / ВЕРИФИКАЦИЯ</div>
+        <h3>Разряд подтверждается документом</h3>
+        <p>Удостоверение, допуски, срок действия. «Опытный сварщик» без разряда в базу не попадает.</p>
+      </div>
+      <div class="strip-item">
+        <div class="strip-num">02 / МАТЧИНГ</div>
+        <h3>Профессия × разряд × допуски</h3>
+        <p>Подбор не по названию вакансии, а по требованию объекта: разряд, допуски, регион, вахта.</p>
+      </div>
+      <div class="strip-item">
+        <div class="strip-num">03 / АНАЛИТИКА</div>
+        <h3>Зарплаты и спрос по профессиям</h3>
+        <p>Что происходит с ценой сварщика в регионе. Эти данные получают и колледжи, и рабочие.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Слой доверия</div>
+      <h2>Доверие — это не вежливость, а четыре проверяемые вещи</h2>
+      <p>Между работодателем и рабочим доверие ломается на конкретных местах: документ, цифра, выезд и оплата. Мы закрываем каждое.</p>
+    </div>
+    <div class="trust">
+      <div class="tcard">
+        <span class="n">01 / ДОКУМЕНТ</span>
+        <h3>Разряд сверен с удостоверением</h3>
+        <p>Профессия, разряд, допуски и срок действия — по документу, а не по самооценке. «Опытный сварщик» без разряда в базу не попадает.</p>
+      </div>
+      <div class="tcard">
+        <span class="n">02 / УСЛОВИЯ</span>
+        <h3>Цифра и условия зафиксированы до выезда</h3>
+        <p>Зарплата, разряд, вахта, жильё, суточные и дата выхода. Не «разберёмся на объекте» — иначе доверия нет ни у кого.</p>
+      </div>
+      <div class="tcard">
+        <span class="n">03 / ВЫХОД</span>
+        <h3>Выход подтверждают обе стороны</h3>
+        <p>Работодатель и рабочий. Только это мы считаем выходом — и только за него платит работодатель. Не за отклик и не за резюме.</p>
+      </div>
+      <div class="tcard">
+        <span class="n">04 / ДЕНЬГИ</span>
+        <h3>С рабочего — ноль</h3>
+        <p>Платит работодатель. Значит, мы не продаём человека и нам невыгодно «впарить» — нам выгодно, чтобы он вышел и остался.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="aibl">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow on-dark">AI-платформа · под капотом</div>
+      <h2>Отсечение, взвешивание, доверие, обратная связь</h2>
+      <p>Модель работает в пять слоёв: жёсткие ограничения отсекают тех, кто не подходит по существу; критерии с весами дают оценку пары; данные рынка корректируют веса; исходы возвращаются обратно в модель. Поверх оценки работает коэффициент доверия — знакомые на объекте, поручительство и подтверждённые выходы, причём с обеих сторон. На выходе — порядок, в котором стоит говорить с людьми, и причина, по которой остальные не прошли.</p>
+    </div>
+
+    <div class="panel" id="mpanel">
+      <div class="panel-head">
+        <span class="ph-lab">заявка объекта</span>
+        <span class="ph-req">Сварщик · 5 разряд и выше · НАКС НГДО · вахта, Тюмень · выход до 10.11</span>
+      </div>
+
+      <p class="swipehint">Схема прокручивается вбок →</p>
+      <div class="graphwrap">
+        <svg id="mgraph" viewBox="0 0 1240 830" role="img"
+             aria-label="Схема модели: кандидаты, критерии с весами, данные рынка, узел оценки, результаты, отсев и обратная связь по исходам"></svg>
+      </div>
+
+      <div class="cards" id="mcards"></div>
+
+      <div class="formula">
+        <div class="fr fscore">
+          <span class="fk">оценка пары</span>
+          <code>score = Σ wᵢ · simᵢ</code>
+        </div>
+        <div class="fr">
+          <span class="fk">жёсткие ограничения</span>
+          <code>Π mᵢ = 1 &nbsp;&nbsp;→ иначе кандидат не ранжируется</code>
+        </div>
+        <div class="fr">
+          <span class="fk">обновление весов</span>
+          <code>wᵢ ← wᵢ + η · (исход − прогноз)</code>
+        </div>
+        <div class="fr kcode">
+          <span class="fk">коэффициент доверия</span>
+          <code>K = 1 + 0.04 × знакомые + 0.05 × поручитель + 0.03 × выходы</code>
+        </div>
+      </div>
+
+      <div class="panel-foot">
+        <p><b>Слой 1 — отсечение.</b> Кандидат не доходит до оценки, если не совпал по профессии, разряду, допуску, формату или сроку. «Сварщик с опытом» вместо сварщика 5 разряда не проходит: это разные объекты и разные деньги.</p>
+        <p><b>Слой 2 — веса.</b> Профессия 0.30 · разряд 0.25 · допуски 0.25 · регион и формат 0.12 · срок выхода 0.08. Жёсткие критерии остаются и в оценке — суммой их не «размывает».</p>
+        <p><b>Слой 3 — данные и обратная связь.</b> Медиана по разряду и спрос в регионе корректируют веса. Дальше модель учится на исходах: кто вышел, кто снялся и на каком шаге.</p>
+        <p><b>Слой 4 — коэффициент доверия.</b> Работает поверх оценки и с обеих сторон. По рабочему: сколько знакомых уже работает на объекте, кто из сотрудников ручается, сколько выходов подтверждено. По предприятию: сколько людей отсюда проработало, сколько работают сейчас, сколько ушли в первый месяц. Это множитель, а не допуск: без разряда не берём даже со своими.</p>
+      </div>
+
+      <p class="panel-note">Схема показывает логику отбора: кандидаты, оценки, коэффициенты и цифры — демонстрационные.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .aibl{background:var(--ink);color:#fff;padding:78px 0 86px}
+  .aibl h2{color:#fff}
+  .aibl .sec-head p{color:#B4BAC4}
+
+  .panel{background:#0B0E12;border:1px solid var(--line-dark);border-radius:20px;padding:22px;box-shadow:0 30px 70px rgba(0,0,0,.3)}
+  .panel-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;padding-bottom:16px;border-bottom:1px solid var(--line-dark);margin-bottom:6px}
+  .ph-lab{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#E7952A}
+  .ph-req{font-size:16px;color:#E6E9EE;font-weight:500}
+
+  .graphwrap{overflow-x:auto}
+  .swipehint{display:none;font-size:12.5px;color:#8E96A2;margin-bottom:8px}
+  #mgraph{display:block;width:100%;min-width:960px;height:auto}
+
+  .nbox{fill:#12161D;stroke:#252B35;stroke-width:1.4}
+  .nbox.hot{stroke:#E7952A;fill:#1A1610}
+  .nbox.cut{stroke:#3D6FC4;stroke-dasharray:4 4;fill:#0F1319}
+  .ntxt{fill:#E6E9EE;font-family:'Golos Text',system-ui,sans-serif;font-size:15.5px;font-weight:600}
+  .nsub{fill:#8E96A2;font-family:'Golos Text',system-ui,sans-serif;font-size:12.5px}
+  .nsub.hot{fill:#F0B463}
+  .nsub.cut{fill:#9CB4D8}
+
+  .edge{fill:none;stroke:#2A313C;stroke-width:1.6;stroke-dasharray:900;stroke-dashoffset:900;opacity:0}
+  .edge.hot{stroke:#E7952A;stroke-width:2}
+  .edge.market{stroke:#4A5464;stroke-width:1.6;stroke-dasharray:900;stroke-dashoffset:900;opacity:0}
+  .edge.cut{stroke:#4E8CFF;stroke-width:1.7;stroke-dasharray:7 6;stroke-dashoffset:0;opacity:0}
+  .edge.cut.on{opacity:.85}
+  .fb{fill:none;stroke:#E7952A;stroke-width:1.8;stroke-dasharray:10 8;opacity:0;stroke-linecap:round}
+  .fb.on{opacity:.75}
+  .fblab{fill:#F0B463;font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.06em;opacity:0}
+  .fblab.on{opacity:1}
+
+  /* коэффициент доверия — третий цвет: бирюза (надёжность, а не требования) */
+  .edge.trust{stroke:#2FC6A8;stroke-width:1.9}
+  .tpass{opacity:0;transition:opacity .5s ease}
+  .tpass.on{opacity:1}
+  .tpass rect{fill:#0F1A18;stroke:#2FC6A8;stroke-width:1.4}
+  .tpass .tlab{fill:#5FD8BF;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase}
+  .tpass .tval{fill:#E6E9EE;font-family:'Golos Text',system-ui,sans-serif;font-size:13px}
+  .tpass .tsub{fill:#8FBDB2;font-family:'Golos Text',system-ui,sans-serif;font-size:12.5px}
+  .tpass.knode rect{fill:#0C1F1B;stroke:#2FC6A8;stroke-width:1.6}
+  .tpass .kkey{fill:#5FD8BF;font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700}
+  .badge rect{fill:#0F1A18;stroke:#2FC6A8;stroke-width:1}
+  .badge text{fill:#5FD8BF;font-family:'JetBrains Mono',monospace;font-size:11px}
+
+  .crow{opacity:0;transition:opacity .4s ease}
+  .crow.on{opacity:1}
+  .cnod rect{fill:#12161D;stroke:#2A313C;stroke-width:1.4;transition:stroke .3s}
+  .cnod.on rect{stroke:#E7952A}
+  .cnod text.ct{fill:#C7CDD6;font-family:'Golos Text',system-ui,sans-serif;font-size:15px;font-weight:500}
+  .cnod text.cw{fill:#8E96A2;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;transition:fill .3s}
+  .cnod.on text.cw{fill:#F0B463}
+  .mkt rect{fill:#101620;stroke:#2A313C;stroke-width:1.4}
+  .mkt.on rect{stroke:#4A5464}
+  .mkt text{fill:#8E96A2;font-family:'Golos Text',system-ui,sans-serif;font-size:13px}
+  .mkt text b,.mkt text.mv{fill:#C7CDD6}
+
+  .agg circle{fill:#12161D;stroke:#2A313C;stroke-width:1.6;opacity:0}
+  .agg.on circle{animation:aggpop .5s cubic-bezier(.2,1.3,.5,1) forwards}
+  .agg text{opacity:0;font-family:'JetBrains Mono',monospace;text-anchor:middle}
+  .agg.on text{animation:fadein .4s ease forwards;animation-delay:.2s}
+  .agg .al{font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;fill:#8E96A2}
+  .agg .av{font-size:24px;font-weight:700;fill:#E7952A}
+
+  .outbox{opacity:0;transform:translateX(8px);transition:opacity .4s,transform .4s}
+  .outbox.on{opacity:1;transform:none}
+  .pulse{fill:#E7952A;opacity:0;filter:drop-shadow(0 0 6px rgba(231,149,42,.85))}
+
+  @keyframes draw{from{opacity:0;stroke-dashoffset:900}to{opacity:1;stroke-dashoffset:0}}
+  @keyframes fadein{from{opacity:0}to{opacity:1}}
+  @keyframes aggpop{from{opacity:0;transform:scale(.8);transform-origin:830px 250px}to{opacity:1;transform:scale(1)}}
+  @keyframes pulsefade{0%,8%{opacity:0}16%{opacity:1}46%{opacity:1}56%,100%{opacity:0}}
+  .formula{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:22px}
+  .fr{background:#101620;border:1px solid #1E242E;border-radius:12px;padding:14px 16px}
+  .fr .fk{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8E96A2;margin-bottom:8px}
+  .fr code{font-family:'JetBrains Mono',monospace;font-size:14.5px;color:#F0B463;white-space:nowrap}
+  .fr.kcode{border-color:rgba(47,198,168,.4);background:linear-gradient(180deg,rgba(47,198,168,.10),rgba(47,198,168,0))}
+  .fr.kcode .fk{color:#5FD8BF}
+  .fr.kcode code{color:#5FD8BF;white-space:normal;font-size:13.5px;line-height:1.5}
+
+  .panel-foot{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:22px;padding-top:20px;border-top:1px solid var(--line-dark)}
+  .panel-foot p{font-size:14.5px;color:#9AA3AF}
+  .panel-foot b{color:#E6E9EE}
+  .panel-note{font-size:13px;color:#6E7683;margin-top:18px}
+
+  .cards{display:none;gap:12px}
+  .mcard{background:#12161D;border:1px solid #20252E;border-radius:14px;padding:15px 16px;opacity:0;transform:translateY(6px);transition:opacity .35s,transform .35s}
+  .mcard.show{opacity:1;transform:none}
+  .mcard.cut{opacity:.6}
+  .mcard.win{border-color:rgba(231,149,42,.5);background:linear-gradient(180deg,rgba(231,149,42,.10),rgba(231,149,42,0))}
+  .mcard-top{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+  .mcard-top b{font-size:16.5px;color:#fff}
+  .mcard-top .sc{font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:700;color:#F0B463}
+  .mcard i{display:block;font-style:normal;font-size:13.5px;color:#8E96A2;margin-top:3px}
+  .mchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+  .mchip{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em;padding:4px 8px;border-radius:6px;background:#171C24;color:#8FE0B6;border:1px solid rgba(28,127,85,.35)}
+  .mchip.no{color:#6E7683;border-color:#242A33;text-decoration:line-through}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:6px}
+  .tag.ok{background:rgba(231,149,42,.16);color:#F0B463;border:1px solid rgba(231,149,42,.45)}
+  .tag.wait{background:#141922;color:#9AA3AF;border:1px solid #242A33}
+  .tag.cut{background:#12161D;color:#6E7683;border:1px solid #20252E}
+
+  /* мобильная схема — вертикальный поток */
+  .mflow{display:none}
+  .mstep{background:#12161D;border:1px solid #232A34;border-radius:14px;padding:14px 15px;opacity:0;transform:translateY(8px);transition:opacity .4s ease,transform .4s ease}
+  .mstep.on{opacity:1;transform:none}
+  .mstep.core{border-color:rgba(231,149,42,.45);background:linear-gradient(180deg,rgba(231,149,42,.12),rgba(231,149,42,0));text-align:center}
+  .mstep.core .ms-lab{color:#F0B463}
+  .ms-lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#E7952A;margin-bottom:10px}
+  .ms-lab.grey{color:#8E96A2}
+  .ms-row{display:flex;justify-content:space-between;gap:10px;align-items:baseline;padding:8px 0;border-bottom:1px solid #1A1F27;font-size:15px;color:#E6E9EE}
+  .ms-row:last-child{border-bottom:none}
+  .ms-row small{display:block;color:#8E96A2;font-size:12.5px;margin-top:2px}
+  .ms-row.cut{color:#7A828F}
+  .ms-row .sc{font-family:'JetBrains Mono',monospace;font-weight:700;color:#F0B463;font-size:15.5px;white-space:nowrap}
+  .ms-row .sc.zero{color:#6E7683}
+  .mcrit{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid #1A1F27;font-size:14.5px;color:#C7CDD6}
+  .mcrit:last-child{border-bottom:none}
+  .mcrit b{font-family:'JetBrains Mono',monospace;color:#F0B463;font-weight:700}
+  .mchips2{display:flex;flex-wrap:wrap;gap:6px}
+  .mreason{font-size:12.5px;padding:5px 9px;border-radius:7px;background:#181D25;border:1px solid #242A33;color:#8E96A2}
+  .mcore-txt{font-family:'JetBrains Mono',monospace;color:#F0B463;letter-spacing:.12em;text-transform:uppercase;font-size:12.5px}
+  .mconn{height:24px;width:2px;margin:0 auto;background:linear-gradient(180deg,rgba(231,149,42,.9),rgba(231,149,42,.15));position:relative;opacity:0;transition:opacity .3s}
+  .mconn.on{opacity:1}
+  .mconn:after{content:"";position:absolute;left:-4px;bottom:-1px;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid rgba(231,149,42,.85)}
+  .ms-note{font-size:12.5px;color:#8E96A2;margin-top:14px;text-align:center}
+  .ms-lab.trust{color:#5FD8BF}
+  .mstep.trust{border-color:rgba(47,198,168,.45);background:linear-gradient(180deg,rgba(47,198,168,.10),rgba(47,198,168,0))}
+  .ms-row .sc.trust{color:#5FD8BF}
+
+  @media (max-width:980px){
+    .graphwrap{display:none}
+    .cards{display:none}
+    .swipehint{display:none}
+    .mflow{display:block}
+    .fscore{display:none}
+    .formula{grid-template-columns:1fr;gap:10px}
+    .fr code{font-size:13px;white-space:normal;word-break:break-word}
+    .panel{padding:16px 14px}
+    .panel-foot{grid-template-columns:1fr;gap:14px}
+    .ph-req{font-size:14.5px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .edge,.edge.market{opacity:1!important;stroke-dashoffset:0!important;animation:none!important}
+    .edge.cut,.fb,.fblab,.crow,.agg text,.outbox,.tpass{opacity:1!important;transform:none!important}
+    .agg circle{opacity:1!important;animation:none!important}
+    .pulse{display:none}
+  }
+</style>
+
+<script>
+  (function(){
+    const NS = 'http://www.w3.org/2000/svg';
+    const svg = document.getElementById('mgraph');
+    const panel = document.getElementById('mpanel');
+    const cards = document.getElementById('mcards');
+    if (!svg || !panel) return;
+
+    const CRIT = [
+      {t:'профессия',      w:'0.30', y:70},
+      {t:'разряд ≥ 5',     w:'0.25', y:162},
+      {t:'НАКС НГДО',      w:'0.25', y:254},
+      {t:'вахта · Тюмень', w:'0.12', y:346},
+      {t:'выход до 10.11', w:'0.08', y:438}
+    ];
+    const CAND = [
+      {n:'Сварщик · 5 разряд', s:'НАКС · вахта · готов 05.11', y:26,  ok:true,  score:'0.94', own:2, chk:[1,1,1,1,1]},
+      {n:'Сварщик · 6 разряд', s:'НАКС · без вахты · Москва',  y:80,  ok:true,  score:'0.71', own:1, chk:[1,1,1,0,1]},
+      {n:'Сварщик · 5 разряд', s:'НАКС · вахта · готов 09.11', y:134, ok:true,  score:'0.63', own:3, chk:[1,1,1,1,1]},
+      {n:'Сварщик · 4 разряд', s:'НАКС · вахта',               y:188, ok:false, why:'разряд ниже',    bad:1, chk:[1,0,1,1,1]},
+      {n:'Сварщик · 5 разряд', s:'без допуска НАКС',           y:242, ok:false, why:'нет допуска',    bad:2, chk:[1,1,0,1,1]},
+      {n:'Монтажник · 5 разряд', s:'высота · вахта',           y:296, ok:false, why:'другая профессия', bad:0, chk:[0,1,0,1,1]},
+      {n:'Сварщик · 5 разряд', s:'НАКС · Москва, без вахты',   y:350, ok:false, why:'не тот формат',  bad:3, chk:[1,1,1,0,1]},
+      {n:'Сварщик · 6 разряд', s:'НАКС · выход 20.11',         y:404, ok:false, why:'не успевает по сроку', bad:4, chk:[1,1,1,1,0]}
+    ];
+
+    function el(tag, attrs, cls){
+      const e = document.createElementNS(NS, tag);
+      for (const k in attrs) e.setAttribute(k, attrs[k]);
+      if (cls) e.setAttribute('class', cls);
+      return e;
+    }
+    function txt(x, y, s, cls, extra){
+      const t = el('text', Object.assign({x:x, y:y}, extra||{}), cls);
+      t.textContent = s; return t;
+    }
+    function path(d, cls, delay){
+      const p = el('path', {d:d}, cls);
+      if (delay != null) p.dataset.delay = delay;
+      return p;
+    }
+
+    const CAND_X = 14, CAND_W = 236, CAND_H = 44;
+    const CX = 560, PW = 172, PH = 50;
+    const AGG = {x:830, y:250, r:56};
+    const OUT_X = 1010, OUT_W = 214, OUT_H = 52;
+
+    const gEdges = el('g'), gFb = el('g'), gNodes = el('g'), gPulses = el('g');
+    [gEdges, gFb, gNodes, gPulses].forEach(function(g){ svg.appendChild(g); });
+
+    /* кандидаты */
+    CAND.forEach(function(c, i){
+      const g = el('g', {}, 'crow');
+      g.style.transitionDelay = (0.12 + i * 0.07).toFixed(2) + 's';
+      g.appendChild(el('rect', {x:CAND_X, y:c.y, width:CAND_W, height:CAND_H, rx:12}, 'nbox' + (c.ok ? '' : ' cut')));
+      g.appendChild(txt(CAND_X+16, c.y+20, c.n, 'ntxt'));
+      g.appendChild(txt(CAND_X+16, c.y+36, c.s, 'nsub' + (c.ok ? '' : ' cut')));
+      if (c.own) {
+        const b = el('g', {}, 'badge');
+        b.appendChild(el('rect', {x:CAND_X+CAND_W-54, y:c.y+8, width:48, height:18, rx:9}));
+        b.appendChild(txt(CAND_X+CAND_W-30, c.y+21, 'свои ' + c.own, '', {'text-anchor':'middle'}));
+        g.appendChild(b);
+      }
+      gNodes.appendChild(g);
+    });
+
+    /* критерии */
+    CRIT.forEach(function(k){
+      const g = el('g', {}, 'cnod');
+      g.appendChild(el('rect', {x:CX-PW/2, y:k.y-PH/2, width:PW, height:PH, rx:13}));
+      g.appendChild(txt(CX, k.y+6, k.t, 'ct', {'text-anchor':'middle'}));
+      g.appendChild(txt(CX, k.y-PH/2-12, k.w, 'cw', {'text-anchor':'middle'}));
+      gNodes.appendChild(g);
+    });
+
+    /* данные рынка */
+    const MKT = [
+      {x:AGG.x-100, y:56,  w:200, h:50, a:'медиана', b:'138 000 ₽ · 5 разряд'},
+      {x:AGG.x-100, y:560, w:200, h:50, a:'спрос',   b:'высокий · Тюмень'}
+    ];
+    MKT.forEach(function(m){
+      const g = el('g', {}, 'mkt');
+      g.appendChild(el('rect', {x:m.x, y:m.y, width:m.w, height:m.h, rx:12}));
+      g.appendChild(txt(m.x+14, m.y+20, m.a, 'nsub', {'style':'font-family:JetBrains Mono,monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase'}));
+      g.appendChild(txt(m.x+14, m.y+38, m.b, 'mv'));
+      gNodes.appendChild(g);
+    });
+
+    /* оценка пары */
+    const agg = el('g', {}, 'agg');
+    agg.appendChild(el('circle', {cx:AGG.x, cy:AGG.y, r:AGG.r}));
+    agg.appendChild(txt(AGG.x, AGG.y-8, 'оценка', 'al'));
+    agg.appendChild(txt(AGG.x, AGG.y+12, 'пары', 'al'));
+    agg.appendChild(txt(AGG.x, AGG.y+40, 'score', 'av'));
+    gNodes.appendChild(agg);
+
+    /* результаты */
+    const OUTS = [
+      {y:96,  t:'идёт к вам', s:'0.94 · приоритет 1', hot:true},
+      {y:176, t:'резерв',     s:'0.71 · если сорвётся', hot:false},
+      {y:256, t:'резерв',     s:'0.63 · позже по сроку', hot:false},
+      {y:536, t:'отсев',      s:'−5 · причина указана', cut:true}
+    ];
+    OUTS.forEach(function(o){
+      const g = el('g', {}, 'outbox');
+      g.appendChild(el('rect', {x:OUT_X, y:o.y, width:OUT_W, height:OUT_H, rx:12}, 'nbox' + (o.hot ? ' hot' : (o.cut ? ' cut' : ''))));
+      g.appendChild(txt(OUT_X+16, o.y+21, o.t, 'ntxt'));
+      g.appendChild(txt(OUT_X+16, o.y+38, o.s, 'nsub' + (o.hot ? ' hot' : (o.cut ? ' cut' : ''))));
+      gNodes.appendChild(g);
+    });
+
+    /* подтверждение выхода обеими сторонами */
+    const cf = el('g', {}, 'confirm');
+    cf.appendChild(el('rect', {x:918, y:638, width:306, height:58, rx:14}, 'nbox hot'));
+    cf.appendChild(txt(936, 662, 'подтверждение выхода', 'nsub hot'));
+    cf.appendChild(txt(936, 683, 'рабочим и работодателем', 'ntxt'));
+    gNodes.appendChild(cf);
+
+    /* коэффициент доверия: надёжность рабочего и предприятия поверх оценки */
+    const KX = {x:760, y:474, w:204, h:64};
+    const tNodes = [];
+    [
+      {x:14,    y:482, w:236, h:64, lab:'надёжность рабочего',    v:'3 подтверждённых выхода', s:'знают 2 · поручитель 1'},
+      {x:OUT_X, y:440, w:214, h:64, lab:'надёжность предприятия', v:'проработало 14 · работают 9', s:'ушли за месяц · 1'}
+    ].forEach(function(t){
+      const g = el('g', {}, 'tpass');
+      g.appendChild(el('rect', {x:t.x, y:t.y, width:t.w, height:t.h, rx:14}));
+      g.appendChild(txt(t.x+16, t.y+20, t.lab, 'tlab'));
+      g.appendChild(txt(t.x+16, t.y+39, t.v, 'tval'));
+      g.appendChild(txt(t.x+16, t.y+56, t.s, 'tsub'));
+      gNodes.appendChild(g); tNodes.push(g);
+    });
+    const knode = el('g', {}, 'tpass knode');
+    knode.appendChild(el('rect', {x:KX.x, y:KX.y, width:KX.w, height:KX.h, rx:14}));
+    knode.appendChild(txt(KX.x+16, KX.y+22, 'коэффициент доверия', 'tlab'));
+    knode.appendChild(txt(KX.x+16, KX.y+48, 'K = 1.09', 'kkey'));
+    gNodes.appendChild(knode); tNodes.push(knode);
+
+    /* связи */
+    const hotEdges = [];
+    CAND.forEach(function(c, i){
+      if (c.ok) {
+        CRIT.forEach(function(k, j){
+          const p = path('M' + (CAND_X+CAND_W) + ' ' + (c.y+CAND_H/2) + ' L' + (CX-PW/2) + ' ' + k.y, 'edge hot', (1.5 + i*0.06 + j*0.04).toFixed(2));
+          gEdges.appendChild(p); hotEdges.push(p);
+        });
+      } else {
+        const p = path('M' + (CAND_X+CAND_W) + ' ' + (c.y+CAND_H/2) + ' L' + (CX-PW/2) + ' ' + CRIT[c.bad].y, 'edge cut', (0.8 + i*0.05).toFixed(2));
+        gEdges.appendChild(p);
+        const q = path('M' + (CAND_X+CAND_W) + ' ' + (c.y+CAND_H/2) + ' L' + (OUT_X-6) + ' ' + (OUTS[3].y+OUT_H/2), 'edge cut', (0.8 + i*0.05).toFixed(2));
+        gEdges.appendChild(q);
+      }
+    });
+    CRIT.forEach(function(k, j){
+      const p = path('M' + (CX+PW/2) + ' ' + k.y + ' L' + (AGG.x-AGG.r+8) + ' ' + AGG.y, 'edge hot', (2.1 + j*0.05).toFixed(2));
+      gEdges.appendChild(p); hotEdges.push(p);
+    });
+    MKT.forEach(function(m, i){
+      const from = (i === 0) ? {x:m.x+100, y:m.y+m.h} : {x:m.x+100, y:m.y};
+      const p = path('M' + from.x + ' ' + from.y + ' L' + AGG.x + ' ' + AGG.y, 'edge market', (2.5 + i*0.08).toFixed(2));
+      gEdges.appendChild(p);
+    });
+    OUTS.forEach(function(o, i){
+      const p = path('M' + (AGG.x+AGG.r-6) + ' ' + AGG.y + ' L' + OUT_X + ' ' + (o.y+OUT_H/2), 'edge hot', (2.9 + i*0.06).toFixed(2));
+      gEdges.appendChild(p); hotEdges.push(p);
+    });
+
+    const dbl = el('path', {d:'M1071 590 L1071 634', 'marker-start':'url(#a2)', 'marker-end':'url(#a2)'}, 'edge hot');
+    gEdges.appendChild(dbl); hotEdges.push(dbl);
+
+    /* рёбра коэффициента доверия: от обеих сторон в узел K, от K в оценку пары */
+    const tEdges = [];
+    const tAgg = el('path', {d:'M' + (AGG.x+22) + ' ' + (AGG.y+AGG.r-8) + ' L' + (KX.x+106) + ' ' + KX.y,
+                             'marker-start':'url(#a2)', 'marker-end':'url(#a2)'}, 'edge trust');
+    tAgg.dataset.delay = '3.3';
+    const tW = el('path', {d:'M250 514 L' + KX.x + ' ' + (KX.y+18)}, 'edge trust');
+    tW.dataset.delay = '3.45';
+    const tE = el('path', {d:'M' + OUT_X + ' 472 L' + (KX.x+KX.w) + ' ' + (KX.y+24)}, 'edge trust');
+    tE.dataset.delay = '3.55';
+    [tAgg, tW, tE].forEach(function(p){ gEdges.appendChild(p); tEdges.push(p); });
+
+    /* обратная связь: от результата назад к весам */
+    const fb = path('M1065 696 C 900 780, 700 745, ' + CX + ' 470', 'fb', null);
+    gFb.appendChild(fb);
+    const fblab = txt(690, 745, 'обратная связь · исходы уточняют веса', 'fblab', {'text-anchor':'middle'});
+    gFb.appendChild(fblab);
+
+    /* импульсы по главной цепочке */
+    [[CAND_X+CAND_W, 48, CX-PW/2, 254], [CX+PW/2, 254, AGG.x-AGG.r+8, AGG.y], [AGG.x+AGG.r-6, AGG.y, OUT_X, 122]]
+      .forEach(function(a, i){
+        const id = 'mp' + i;
+        const p = el('path', {id:id, d:'M' + a[0] + ' ' + a[1] + ' L' + a[2] + ' ' + a[3], fill:'none', stroke:'none'});
+        gPulses.appendChild(p);
+        const c = el('circle', {r:4}, 'pulse');
+        const an = el('animateMotion', {dur:'12s', repeatCount:'indefinite', keyPoints:'0;1', keyTimes:'0;1', calcMode:'linear', begin:(2.2 + i*0.5)+'s'});
+        const mp = el('mpath', {});
+        mp.setAttribute('href', '#' + id);
+        mp.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#' + id);
+        an.appendChild(mp); c.appendChild(an);
+        gPulses.appendChild(c);
+      });
+
+    /* мобильная схема: вертикальный поток */
+    const flow = document.createElement('div');
+    flow.className = 'mflow';
+    flow.id = 'mmobile';
+    let fh = '';
+    fh += '<div class="mstep" data-s="1"><div class="ms-lab">1 · кандидаты в базе — 8</div>';
+    CAND.forEach(function(c){
+      fh += '<div class="ms-row' + (c.ok ? '' : ' cut') + '"><span>' + c.n + '<small>' + c.s +
+            (c.own ? ' · знают ' + c.own : '') + '</small></span>' +
+            '<span class="sc' + (c.ok ? '' : ' zero') + '">' + (c.ok ? c.score : '—') + '</span></div>';
+    });
+    fh += '</div><div class="mconn"></div>';
+    fh += '<div class="mstep" data-s="2"><div class="ms-lab">2 · жёсткие ограничения и веса</div>';
+    CRIT.forEach(function(k){ fh += '<div class="mcrit"><span>' + k.t + '</span><b>' + k.w + '</b></div>'; });
+    fh += '</div><div class="mconn"></div>';
+    fh += '<div class="mstep" data-s="3"><div class="ms-lab grey">отсев — 5</div><div class="mchips2">';
+    CAND.filter(function(c){ return !c.ok; }).forEach(function(c){ fh += '<span class="mreason">' + c.n + ' · ' + c.why + '</span>'; });
+    fh += '</div></div><div class="mconn"></div>';
+    fh += '<div class="mstep core" data-s="4"><div class="ms-lab">3 · оценка пары</div><div class="mcore-txt">score = Σ wᵢ · simᵢ</div></div>';
+    fh += '<div class="mconn"></div>';
+    fh += '<div class="mstep trust" data-s="7"><div class="ms-lab trust">4 · коэффициент доверия</div>' +
+          '<div class="ms-row"><span>рабочий<small>3 подтверждённых выхода · знают 2 · поручитель 1</small></span><span class="sc trust">K 1.09</span></div>' +
+          '<div class="ms-row"><span>предприятие<small>проработало 14 · работают 9 · ушли за месяц 1</small></span><span class="sc trust">⇄</span></div>' +
+          '<p class="ms-note" style="text-align:left;margin-top:8px">K = 1 + 0.04 × знакомые + 0.05 × поручитель + 0.03 × выходы. Множитель, а не допуск: без разряда не берём даже со своими.</p></div>';
+    fh += '<div class="mconn"></div>';
+    fh += '<div class="mstep" data-s="5"><div class="ms-lab">5 · результат</div>';
+    fh += '<div class="ms-row"><span>идёт к вам<small>приоритет 1</small></span><span class="sc">0.94</span></div>';
+    fh += '<div class="ms-row"><span>резерв<small>если сорвётся</small></span><span class="sc">0.71</span></div>';
+    fh += '<div class="ms-row"><span>резерв<small>позже по сроку</small></span><span class="sc">0.63</span></div>';
+    fh += '</div>';
+    fh += '<div class="mconn"></div><div class="mstep" data-s="6"><div class="ms-lab">6 · подтверждение выхода</div>' +
+          '<div class="ms-row"><span>работодатель и рабочий<small>обе стороны подтверждают факт выхода</small></span><span class="sc">⇄</span></div></div>';
+    fh += '<p class="ms-note">веса пересчитываются по исходам: кто вышел, кто снялся и на каком шаге</p>';
+    flow.innerHTML = fh;
+    const formula = panel.querySelector('.formula');
+    panel.insertBefore(flow, formula || null);
+
+    const rows = gNodes.querySelectorAll('.crow');
+    const cnods = gNodes.querySelectorAll('.cnod');
+    const mkts = gNodes.querySelectorAll('.mkt');
+    const outro = gNodes.querySelectorAll('.outbox');
+    const msteps = flow.querySelectorAll('.mstep');
+    const mconss = flow.querySelectorAll('.mconn');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let timers = [];
+    function clear(){ timers.forEach(clearTimeout); timers = []; }
+    function T(fn, ms){ timers.push(setTimeout(fn, ms)); }
+
+    function showAllEdges(){
+      gEdges.querySelectorAll('.edge').forEach(function(p){
+        p.classList.add('on');
+        if (!p.classList.contains('cut') && !p.classList.contains('market')) {
+          p.style.animation = 'draw .7s cubic-bezier(.4,0,.2,1) forwards';
+          p.style.animationDelay = (p.dataset.delay || 0) + 's';
+        } else {
+          p.style.opacity = 1;
+        }
+      });
+    }
+    function hideAllEdges(){
+      gEdges.querySelectorAll('.edge').forEach(function(p){
+        p.classList.remove('on');
+        p.style.animation = 'none';
+        if (!p.classList.contains('cut') && !p.classList.contains('market')) { p.style.opacity = 0; p.style.strokeDashoffset = 900; }
+        else if (p.classList.contains('market')) { p.style.opacity = 0; p.style.strokeDashoffset = 900; }
+        else { p.style.opacity = 0; }
+      });
+    }
+
+    function run(){
+      clear();
+      if (reduce) return;
+      rows.forEach(function(r){ r.classList.remove('on'); });
+      cnods.forEach(function(c){ c.classList.remove('on'); });
+      mkts.forEach(function(m){ m.classList.remove('on'); });
+      agg.classList.remove('on');
+      outro.forEach(function(o){ o.classList.remove('on'); });
+      fb.classList.remove('on'); fblab.classList.remove('on');
+      tNodes.forEach(function(t){ t.classList.remove('on'); });
+      msteps.forEach(function(c){ c.classList.remove('on'); });
+      mconss.forEach(function(c){ c.classList.remove('on'); });
+      hideAllEdges(); void panel.offsetWidth;
+
+      T(function(){ rows.forEach(function(r){ r.classList.add('on'); }); }, 100);
+      T(function(){ msteps.forEach(function(c, i){ timers.push(setTimeout(function(){ c.classList.add('on'); }, i*220)); });
+        mconss.forEach(function(c, i){ timers.push(setTimeout(function(){ c.classList.add('on'); }, i*220 + 120)); }); }, 400);
+      T(function(){                                   /* отсев первым слоем */
+        gEdges.querySelectorAll('.edge.cut').forEach(function(p){ p.style.opacity = 1; });
+      }, 900);
+      T(function(){ cnods.forEach(function(c, i){ timers.push(setTimeout(function(){ c.classList.add('on'); }, i*130)); }); }, 1400);
+      T(function(){
+        hotEdges.forEach(function(p){
+          p.style.animation = 'draw .7s cubic-bezier(.4,0,.2,1) forwards';
+          p.style.animationDelay = ((p.dataset.delay || 0) - 1.4 > 0 ? (p.dataset.delay - 1.4) : 0) + 's';
+        });
+      }, 1400);
+      T(function(){
+        mkts.forEach(function(m){ m.classList.add('on'); });
+        gEdges.querySelectorAll('.edge.market').forEach(function(p){
+          p.style.animation = 'draw .8s cubic-bezier(.4,0,.2,1) forwards';
+          p.style.animationDelay = (p.dataset.delay || 0) + 's';
+        });
+      }, 2400);
+      T(function(){ agg.classList.add('on'); }, 2900);
+      T(function(){ outro.forEach(function(o){ o.classList.add('on'); }); }, 3200);
+      T(function(){                                   /* коэффициент доверия поверх оценки */
+        tNodes.forEach(function(t){ t.classList.add('on'); });
+        tEdges.forEach(function(p){
+          p.style.animation = 'draw .8s cubic-bezier(.4,0,.2,1) forwards';
+          p.style.animationDelay = ((p.dataset.delay || 0) - 3.3 > 0 ? (p.dataset.delay - 3.3) : 0) + 's';
+        });
+      }, 3300);
+      T(function(){ cf.classList.add('on'); }, 3700);
+      T(function(){ fb.classList.add('on'); fblab.classList.add('on'); }, 4000);
+    }
+
+    if (reduce) {
+      rows.forEach(function(r){ r.classList.add('on'); });
+      cnods.forEach(function(c){ c.classList.add('on'); });
+      mkts.forEach(function(m){ m.classList.add('on'); });
+      agg.classList.add('on'); outro.forEach(function(o){ o.classList.add('on'); });
+      msteps.forEach(function(c){ c.classList.add('on'); }); mconss.forEach(function(c){ c.classList.add('on'); });
+      cf.classList.add('on');
+      tNodes.forEach(function(t){ t.classList.add('on'); });
+      fb.classList.add('on'); fblab.classList.add('on');
+      gEdges.querySelectorAll('.edge').forEach(function(p){ p.style.opacity = 1; p.style.strokeDashoffset = 0; });
+      return;
+    }
+
+    let timer = null, visible = false;
+    function start(){ if(!timer && visible){ run(); timer = setInterval(run, 12000); } }
+    function stop(){ if(timer){ clearInterval(timer); timer = null; clear(); } }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function(es){
+        es.forEach(function(e){ visible = e.isIntersecting; visible ? start() : stop(); });
+      }, {threshold:.18}).observe(panel);
+    } else { visible = true; start(); }
+  })();
+</script>
+
+<section id="fork">
+  <div class="wrap">
+    <div class="forks">
+      <a href="/employers/" class="fork">
+        <div class="who">Работодателю</div>
+        <h3>Нужны рабочие на объект</h3>
+        <p>Подбираем по разряду и допускам, ведём до выхода. Платите за вышедшего, а не за отклики и резюме.</p>
+        <div class="go">Найти рабочих <span>→</span></div>
+      </a>
+      <a href="/colleges/" class="fork">
+        <div class="who">Колледжу</div>
+        <h3>Нужны рабочие места для выпускников</h3>
+        <p>Трудоустройство выпускников, выгрузка для ЦСТВ, работодатели-партнёры. С колледжа — ноль.</p>
+        <div class="go">Обсудить пилот <span>→</span></div>
+      </a>
+      <a href="/workers/" class="fork">
+        <div class="who">Рабочему</div>
+        <h3>Ищешь работу по своему разряду</h3>
+        <p>Напиши профессию и телефон в бота в MAX — пришлём вакансии под твой разряд, допуски и регион. Бесплатно.</p>
+        <div class="go">Открыть бота <span>→</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="form-band" id="zayavka">
+  <div class="wrap" style="padding-top:70px;padding-bottom:70px">
+    <div class="form-grid">
+      <div>
+        <div class="eyebrow">Заявка</div>
+        <h2>Три вопроса — и мы перезвоним</h2>
+        <p style="color:#4A4F58">Сначала спросим, кто вы и сколько людей нужно, — тогда ответит тот, кто понимает задачу, а не общий отдел.</p>
+        <p style="color:var(--muted);font-size:14.5px;margin-top:22px">Отвечаем в течение рабочего дня. Заявка уходит напрямую в наш Telegram.</p>
+      </div>
+
+      <div class="form-card">
+        <form id="lead" onsubmit="return false">
+          <div class="fstep active" data-step="1">
+            <div class="fstep-label">Шаг 1 из 3</div>
+            <h3>Кто вы?</h3>
+            <div class="opts">
+              <button type="button" class="opt" onclick="pickWho(this,'Работодатель')">Работодатель — нужны рабочие <small>подряд, монтаж</small></button>
+              <button type="button" class="opt" onclick="pickWho(this,'Колледж')">Колледж — трудоустройство выпускников</button>
+            </div>
+            <p style="font-size:14px;color:var(--muted);margin-top:16px">Я рабочий и ищу работу — <a href="/workers/" style="text-decoration:underline">перейти на страницу для рабочих →</a></p>
+          </div>
+
+          <div class="fstep" data-step="2">
+            <div class="fstep-label">Шаг 2 из 3</div>
+            <h3 id="q2-title">Сколько выходов рабочих нужно в месяц?</h3>
+            <div class="opts" id="q2-opts">
+              <button type="button" class="opt" onclick="pickScale(this,'1–5 выходов')">1–5 выходов <small>ведём в общем потоке</small></button>
+              <button type="button" class="opt" onclick="pickScale(this,'от 6 выходов')">от 6 выходов <small>персональный менеджер</small></button>
+            </div>
+            <button type="button" class="back" onclick="goStep(1)">← Назад</button>
+          </div>
+
+          <div class="fstep" data-step="3">
+            <div class="fstep-label">Шаг 3 из 3</div>
+            <h3>Куда перезвонить</h3>
+            <div class="fields">
+              <div class="fld"><label>Организация или колледж</label><input type="text" placeholder="Название"></div>
+              <div class="field-row">
+                <div class="fld"><label>Имя</label><input type="text" placeholder="Как к вам обращаться"></div>
+                <div class="fld"><label>Телефон</label><input type="tel" placeholder="+7 900 000-00-00"></div>
+              </div>
+            </div>
+            <div class="form-foot">
+              <button type="button" class="btn btn-amber" onclick="goStep(4)">Отправить</button>
+              <span class="note">Нажимая «Отправить», вы соглашаетесь на обработку данных. <a href="#" style="text-decoration:underline">Политика</a></span>
+            </div>
+            <button type="button" class="back" onclick="goStep(2)">← Назад</button>
+          </div>
+
+          <div class="done" id="done">
+            <div class="tick">✓</div>
+            <h3 style="font-size:22px;font-weight:700;margin-bottom:10px">Заявка принята</h3>
+            <p style="color:#4A4F58">Позвоним с 9:00 до 19:00 МСК. Если срочно — <a href="tel:+79253560809" style="text-decoration:underline">8 925 356-08-09</a>.</p>
+            <p style="font-size:13.5px;color:var(--muted);margin-top:18px">Демо-версия формы: заявка пока не уходит, покажем после подключения приёма в Telegram.</p>
+            <button type="button" class="back" onclick="resetForm()">← Заполнить ещё одну</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand"><span class="mark">6</span> 6разряд</div>
+        <p style="max-width:26em;color:#B4BAC4;font-size:15px">AI-платформа найма квалифицированных рабочих для строительной отрасли. Разряд и допуски подтверждены документом. 6razryad.ru</p>
+      </div>
+      <div>
+        <h4>Разделы</h4>
+        <a href="/employers/">Работодателям</a>
+        <a href="/colleges/">Колледжам</a>
+        <a href="/workers/">Рабочим</a>
+      </div>
+      <div>
+        <h4>Связаться</h4>
+        <a href="tel:+79253560809">8 925 356-08-09</a>
+        <a href="https://t.me/khayrbek">тг. @khayrbek</a>
+        <a href="#">Политика обработки данных</a>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2026 · ООО «6разряд»</span>
+      <span class="mono">6razryad.ru</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  let who=null, scale=null;
+  function showStep(n){
+    document.querySelectorAll('.fstep').forEach(s=>s.classList.toggle('active', +s.dataset.step===n));
+    document.getElementById('done').classList.remove('active');
+  }
+  function goStep(n){
+    if(n===4){ document.querySelectorAll('.fstep').forEach(s=>s.classList.remove('active')); document.getElementById('done').classList.add('active'); return; }
+    showStep(n);
+  }
+  function pickWho(el,label){
+    el.parentElement.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+    el.classList.add('sel'); who=label;
+    const t=document.getElementById('q2-title'), o=document.getElementById('q2-opts');
+    if(label==='Колледж'){
+      t.textContent='Сколько выпускников в год?';
+      o.innerHTML='<button type="button" class="opt" onclick="pickScale(this,\'до 100\')">до 100 <small>пилот на группе</small></button>'+
+                  '<button type="button" class="opt" onclick="pickScale(this,\'100 и больше\')">100 и больше <small>полный поток</small></button>';
+    }else{
+      t.textContent='Сколько выходов рабочих нужно в месяц?';
+      o.innerHTML='<button type="button" class="opt" onclick="pickScale(this,\'1–5 выходов\')">1–5 выходов <small>ведём в общем потоке</small></button>'+
+                  '<button type="button" class="opt" onclick="pickScale(this,\'от 6 выходов\')">от 6 выходов <small>персональный менеджер</small></button>';
+    }
+    setTimeout(()=>showStep(2),140);
+  }
+  function pickScale(el,label){
+    el.parentElement.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+    el.classList.add('sel'); scale=label;
+    setTimeout(()=>showStep(3),140);
+  }
+  function resetForm(){
+    who=null;scale=null;
+    document.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+    document.querySelectorAll('#lead input').forEach(i=>i.value='');
+    showStep(1);
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Колледжам — 6 разряд: AI-платформа трудоустройства выпускников</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0D1014;
+    --ink-2:#171B22;
+    --paper:#F6F5F2;
+    --paper-2:#FFFFFF;
+    --line:#E2E0DA;
+    --line-dark:#2A2F38;
+    --muted:#6B6F78;
+    --muted-dark:#9AA1AC;
+    --amber:#E7952A;
+    --amber-soft:#FBEBD2;
+    --green:#1C7F55;
+    --green-soft:#E3F2EA;
+    --r:14px;
+    --max:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Golos Text',system-ui,sans-serif;
+    background:var(--paper);color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    font-size:17px;line-height:1.5;
+  }
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+  a{color:inherit;text-decoration:none}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .eyebrow.on-dark{color:var(--muted-dark)}
+
+  /* ---------- NAV ---------- */
+  header{position:sticky;top:0;z-index:50;background:rgba(246,245,242,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:66px;gap:24px}
+  .logo{display:flex;align-items:center;gap:11px;font-weight:800;font-size:19px;letter-spacing:-.01em}
+  .logo .mark{
+    width:34px;height:34px;border-radius:9px;background:var(--ink);color:var(--paper);
+    display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:16px;
+    position:relative;
+  }
+  .logo .mark:after{
+    content:"";position:absolute;left:5px;right:5px;bottom:5px;height:3px;border-radius:2px;background:var(--amber);
+  }
+  .nav-links{display:flex;gap:26px;font-size:15px;color:#3A3F48}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-links a[aria-current="page"]{color:var(--ink);font-weight:600}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    height:46px;padding:0 22px;border-radius:11px;font-weight:600;font-size:15.5px;
+    border:1px solid transparent;cursor:pointer;transition:transform .12s ease,box-shadow .15s ease,background .15s;
+    font-family:inherit;
+  }
+  .btn:hover{transform:translateY(-1px)}
+  .btn-ink{background:var(--ink);color:#fff}
+  .btn-ink:hover{box-shadow:0 8px 22px rgba(13,16,20,.22)}
+  .btn-amber{background:var(--amber);color:#231703}
+  .btn-amber:hover{box-shadow:0 8px 22px rgba(231,149,42,.34)}
+  .btn-ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--ink)}
+  .btn-sm{height:40px;padding:0 17px;font-size:14.5px}
+
+  /* ---------- HERO ---------- */
+  .hero{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:64px;align-items:center;padding:74px 0 80px}
+  h1{font-size:clamp(38px,4.4vw,60px);line-height:1.03;letter-spacing:-.028em;font-weight:800;margin:20px 0 22px}
+  h1 em{font-style:normal;white-space:normal;padding:0 .04em;
+    background:linear-gradient(180deg,transparent 56%,var(--amber-soft) 56%,var(--amber-soft) 94%,transparent 94%);
+    -webkit-box-decoration-break:clone;box-decoration-break:clone}
+  .lede{font-size:18.5px;color:#3E434C;max-width:30em}
+  .cta-row{display:flex;gap:12px;margin:32px 0 22px;flex-wrap:wrap}
+  .terms{display:flex;gap:22px;flex-wrap:wrap;font-size:14.5px;color:var(--muted)}
+  .terms span{display:flex;align-items:center;gap:8px}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--amber);flex:none}
+
+  /* ---------- CREDENTIAL CARD ---------- */
+  .cred-stack{position:relative;padding:14px}
+  .cred-stack:before{
+    content:"";position:absolute;inset:26px -6px -6px 26px;border:1px solid var(--line);
+    border-radius:18px;z-index:-1;background:var(--paper-2);
+  }
+  .cred{
+    background:var(--ink);color:#fff;border-radius:18px;padding:26px 26px 22px;
+    box-shadow:0 26px 60px rgba(13,16,20,.24);position:relative;overflow:hidden;
+    transform:rotate(-1.1deg);
+  }
+  .cred:after{
+    content:"";position:absolute;right:-70px;top:-70px;width:200px;height:200px;border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, rgba(231,149,42,.30), transparent 62%);
+  }
+  .cred-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:1px solid var(--line-dark)}
+  .cred-row{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px dashed var(--line-dark)}
+  .cred-row:last-of-type{border-bottom:none}
+  .cred-row dt{font-size:13.5px;color:var(--muted-dark)}
+  .cred-row dd{font-weight:600;font-size:15.5px;text-align:right}
+  .rank-big{font-family:'JetBrains Mono',monospace;font-size:34px;font-weight:700;color:var(--amber);line-height:1}
+  .stamp{
+    display:inline-flex;align-items:center;gap:8px;margin-top:18px;
+    background:rgba(28,127,85,.18);border:1px solid rgba(28,127,85,.5);color:#7FD8AE;
+    padding:8px 14px;border-radius:9px;font-size:13.5px;font-weight:600;
+  }
+  .cred-note{font-size:13px;color:var(--muted-dark);margin-top:12px;line-height:1.45}
+
+  /* ---------- SECTION BASE ---------- */
+  section{padding:78px 0}
+  .sec-head{max-width:44rem;margin-bottom:44px}
+  h2{font-size:clamp(27px,2.7vw,38px);line-height:1.1;letter-spacing:-.022em;font-weight:800;margin:16px 0 14px}
+  .sec-head p{color:#4A4F58;font-size:17.5px}
+
+  /* ---------- STRIP (3 items) ---------- */
+  .strip{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .strip-item{padding:30px 30px 30px 0;border-right:1px solid var(--line)}
+  .strip-item:last-child{border-right:none;padding-right:0}
+  .strip-item+.strip-item{padding-left:30px}
+  .strip-num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--amber);letter-spacing:.1em;margin-bottom:14px}
+  .strip-item h3{font-size:19px;font-weight:700;margin-bottom:9px;letter-spacing:-.012em}
+  .strip-item p{font-size:15.5px;color:#4A4F58}
+
+  /* ---------- RANK TABLE ---------- */
+  .dark{background:var(--ink);color:#fff}
+  .dark h2{color:#fff}
+  .dark .sec-head p{color:#B4BAC4}
+  .ranks{margin-top:6px}
+  .rank-row{display:grid;grid-template-columns:200px 1fr 130px;gap:22px;align-items:center;padding:17px 0;border-bottom:1px solid var(--line-dark)}
+  .rank-row .prof{font-weight:600;font-size:16.5px}
+  .rank-row .note{font-size:14px;color:var(--muted-dark)}
+  .rank-bar{position:relative;height:11px;border-radius:6px;background:#20252E;overflow:hidden}
+  .rank-bar i{position:absolute;top:0;bottom:0;background:linear-gradient(90deg,rgba(231,149,42,.45),var(--amber));border-radius:6px}
+  .rank-row .rng{font-family:'JetBrains Mono',monospace;font-size:14.5px;color:var(--amber);text-align:right}
+  .rank-legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:26px;font-size:13.5px;color:var(--muted-dark)}
+
+  /* ---------- FOUR DOORS ---------- */
+  .doors{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .door{
+    background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r);padding:26px;
+    display:flex;flex-direction:column;gap:12px;transition:border-color .15s,transform .15s,box-shadow .15s;
+  }
+  .door:hover{border-color:#C9C6BE;transform:translateY(-2px);box-shadow:0 14px 34px rgba(13,16,20,.07)}
+  .door-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+  .door h3{font-size:19.5px;font-weight:700;letter-spacing:-.015em}
+  .door p{font-size:15.5px;color:#4A4F58}
+  .door .go{margin-top:auto;font-size:14.5px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:7px}
+  .chip{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;padding:4px 9px;border-radius:999px;background:#EFEDE8;color:#63666E;text-transform:uppercase;white-space:nowrap}
+  .chip.amber{background:var(--amber-soft);color:#8A5A0B}
+
+  /* ---------- STEPS ---------- */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:s}
+  .step{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r);padding:26px}
+  .step .n{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:.1em;margin-bottom:20px;display:block}
+  .step h3{font-size:18px;font-weight:700;margin-bottom:8px}
+  .step p{font-size:15px;color:#4A4F58}
+
+  /* ---------- FORM ---------- */
+  .form-band{background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .form-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:56px;align-items:start}
+  .form-card{border:1px solid var(--line);border-radius:18px;background:var(--paper);padding:30px}
+  .fstep{display:none}
+  .fstep.active{display:block}
+  .fstep-label{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .fstep h3{font-size:22px;font-weight:700;letter-spacing:-.018em;margin-bottom:18px}
+  .opts{display:grid;gap:10px}
+  .opt{
+    text-align:left;background:var(--paper-2);border:1px solid var(--line);border-radius:12px;
+    padding:15px 17px;font-size:16px;font-weight:500;font-family:inherit;cursor:pointer;
+    display:flex;justify-content:space-between;align-items:center;gap:14px;transition:all .12s;
+  }
+  .opt:hover{border-color:var(--ink);background:#fff}
+  .opt.sel{border-color:var(--ink);background:var(--ink);color:#fff}
+  .opt small{font-size:13.5px;color:var(--muted);font-weight:400}
+  .opt.sel small{color:var(--muted-dark)}
+  .fields{display:grid;gap:12px;margin-bottom:18px}
+  .fld{display:grid;gap:6px}
+  .fld label{font-size:13.5px;color:var(--muted);font-weight:500}
+  .fld input,.fld select{
+    height:48px;border:1px solid var(--line);border-radius:11px;background:#fff;
+    padding:0 15px;font-family:inherit;font-size:16px;color:var(--ink);
+  }
+  .fld input:focus,.fld select:focus{outline:2px solid var(--amber);outline-offset:1px;border-color:transparent}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .form-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:6px;flex-wrap:wrap}
+  .form-foot .note{font-size:13px;color:var(--muted);max-width:22em}
+  .back{border:none;background:none;font-family:inherit;font-size:14.5px;color:var(--muted);cursor:pointer;padding:6px 0}
+  .back:hover{color:var(--ink)}
+  .done{display:none;text-align:left}
+  .done.active{display:block}
+  .done .tick{width:44px;height:44px;border-radius:50%;background:var(--green-soft);color:var(--green);display:grid;place-items:center;font-size:22px;margin-bottom:16px}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--ink);color:#fff;padding:56px 0 34px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+  .foot-grid h4{font-size:13.5px;color:var(--muted-dark);font-weight:500;margin-bottom:14px}
+  .foot-grid a,.foot-grid p{font-size:15.5px;color:#D5D9DF;display:block;margin-bottom:9px}
+  .foot-grid a:hover{color:#fff}
+  .foot-bot{border-top:1px solid var(--line-dark);margin-top:38px;padding-top:20px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:13.5px;color:var(--muted-dark)}
+  .foot-brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:19px;margin-bottom:16px}
+  .foot-brand .mark{width:34px;height:34px;border-radius:9px;background:var(--amber);color:#231703;display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-weight:700}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:980px){
+    .hero{grid-template-columns:1fr;gap:44px;padding:44px 0 56px}
+    header .nav{flex-wrap:wrap;height:auto;padding-top:12px;padding-bottom:12px;gap:12px}
+    .nav-links{display:flex;order:3;width:100%;gap:16px;font-size:14.5px;overflow-x:auto;
+      padding:2px 0 6px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .nav-links::-webkit-scrollbar{display:none}
+    .nav-links a{white-space:nowrap;padding:12px 0;border-bottom:2px solid transparent}
+    .nav-links a:active{border-bottom-color:var(--amber)}
+    header .btn-sm{height:42px;padding:0 15px;font-size:14px}
+    footer .foot-grid a{padding:12px 0}
+    footer .foot-grid p{margin-bottom:12px}
+    .linkbtn{padding:10px 0}
+    .strip{grid-template-columns:1fr;border-bottom:none}
+    .strip-item{border-right:none;border-bottom:1px solid var(--line);padding:24px 0}
+    .strip-item+.strip-item{padding-left:0}
+    .doors,.steps{grid-template-columns:1fr}
+    .form-grid{grid-template-columns:1fr;gap:32px}
+    .rank-row{grid-template-columns:1fr;gap:8px;padding:15px 0}
+    .rank-row .rng{text-align:left}
+    .foot-grid{grid-template-columns:1fr;gap:28px}
+  }
+  @media (max-width:560px){
+    body{font-size:16px}
+    .wrap{padding:0 18px}
+    section{padding:52px 0}
+    .cred{transform:none;padding:22px}
+    .field-row{grid-template-columns:1fr}
+    .form-card{padding:20px}
+    .cta-row .btn{width:100%}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+  /* мобильные цели нажатия: добиваем до комфортного размера */
+  @media (max-width:980px){
+    header .logo{min-height:44px;display:flex;align-items:center}
+    .dash .seg button{padding:12px 14px;font-size:13.5px}
+    .linkbtn{display:inline-block;min-height:44px;padding:12px 0}
+    footer .foot-grid a{min-height:44px;display:flex;align-items:center}
+  }
+  /* слой доверия */
+  .promise{display:flex;gap:12px;align-items:flex-start;font-size:17.5px;font-weight:600;max-width:36em;margin:0 0 26px;line-height:1.4}
+  .promise i{width:10px;height:10px;border-radius:3px;background:var(--amber);flex:none;margin-top:8px}
+  .trust{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+  .tcard .n{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--amber);letter-spacing:.1em;display:block;margin-bottom:12px}
+  .tcard h3{font-size:18.5px;font-weight:700;margin-bottom:9px;letter-spacing:-.014em}
+  .tcard p{font-size:15.5px;color:#4A4F58}
+  .tcard ul{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+  .tcard li{font-size:15px;color:#4A4F58;display:flex;gap:9px}
+  .tcard li:before{content:"·";color:var(--amber);font-weight:700}
+  .risk{background:var(--ink);color:#fff;border-radius:18px;padding:30px;margin-top:16px}
+  .risk .rrow{padding:18px 0;border-bottom:1px solid var(--line-dark);display:grid;grid-template-columns:1fr 1.15fr;gap:24px}
+  .risk .rrow:first-child{padding-top:0}
+  .risk .rrow:last-child{border-bottom:none;padding-bottom:0}
+  .risk h4{font-size:17.5px;font-weight:700;margin-bottom:6px}
+  .risk .lbl{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8E96A2}
+  .risk p{font-size:15.5px;color:#B4BAC4}
+  .risk p b{color:#F0B463}
+  .confirm{opacity:0;transition:opacity .4s}
+  .confirm.on{opacity:1}
+  @media (max-width:980px){.trust,.trio{grid-template-columns:1fr}.risk{padding:22px}.risk .rrow{grid-template-columns:1fr;gap:10px}}
+</style>
+
+<style>
+  .benefits{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .benefit{background:var(--ink-2);border:1px solid var(--line-dark);border-radius:var(--r);padding:26px}
+  .benefit .n{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--amber);letter-spacing:.1em;display:block;margin-bottom:14px}
+  .benefit h3{font-size:19px;font-weight:700;letter-spacing:-.015em;margin-bottom:9px}
+  .benefit p{font-size:15.5px;color:#B4BAC4}
+  .ask{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .ask-item{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+  .ask-item .n{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:.1em;display:block;margin-bottom:16px}
+  .ask-item h3{font-size:17.5px;font-weight:700;margin-bottom:8px}
+  .ask-item p{font-size:15px;color:#4A4F58}
+  .nofee{background:var(--amber-soft);border:1px solid #E9D3AC;border-radius:var(--r);padding:26px;margin-top:20px}
+  .nofee h3{font-size:18px;font-weight:700;margin-bottom:8px}
+  .nofee p{font-size:15.5px;color:#6B4E14}
+  .pilot{background:var(--ink);color:#fff;border-radius:22px;padding:40px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr);gap:32px;align-items:center}
+  .pilot h2{color:#fff;margin-top:12px}
+  .pilot p{color:#B4BAC4;font-size:17px;margin-top:12px}
+  .metric{font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--amber);border-left:2px solid var(--amber);padding-left:16px;margin-top:22px;line-height:1.6}
+  @media (max-width:980px){.benefits,.ask{grid-template-columns:1fr}.pilot{grid-template-columns:1fr;padding:26px}}
+</style>
+
+<style>
+  .tech{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .tech-item{background:var(--ink-2);border:1px solid var(--line-dark);border-radius:var(--r);padding:26px}
+  .tech-item .n{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--amber);letter-spacing:.1em;display:block;margin-bottom:14px}
+  .tech-item h3{font-size:19px;font-weight:700;letter-spacing:-.015em;margin-bottom:9px}
+  .tech-item p{font-size:15.5px;color:#B4BAC4}
+  .claim{border-top:1px solid var(--line-dark);margin-top:34px;padding-top:24px;font-size:17px;color:#D5D9DF;max-width:52em}
+  .claim b{color:#fff}
+  .proof{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+  .chat{background:var(--ink);border-radius:18px;padding:22px;color:#fff}
+  .chat-head{display:flex;align-items:center;gap:11px;padding-bottom:16px;border-bottom:1px solid var(--line-dark);margin-bottom:16px}
+  .chat-ava{width:34px;height:34px;border-radius:50%;background:var(--amber);color:#231703;display:grid;place-items:center;font-weight:700;font-size:15px;flex:none}
+  .chat-name{font-weight:600;font-size:15.5px}
+  .chat-sub{font-size:12.5px;color:var(--muted-dark)}
+  .bub{border-radius:14px;padding:12px 15px;font-size:15px;line-height:1.45;margin-bottom:10px;max-width:92%}
+  .bub.bot{background:#20252E;color:#E6E9EE;border-bottom-left-radius:5px}
+  .bub.me{background:var(--amber);color:#231703;margin-left:auto;border-bottom-right-radius:5px;font-weight:500}
+  .bub .btnline{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+  .bub .kb{background:#2C323C;color:#E6E9EE;border-radius:9px;padding:7px 12px;font-size:13.5px}
+  .chat-cap{font-size:13.5px;color:var(--muted);margin-top:12px;line-height:1.5}
+  .stack{display:grid;gap:12px}
+  .faq{border-top:1px solid var(--line)}
+  .faq details{border-bottom:1px solid var(--line)}
+  .faq summary{cursor:pointer;list-style:none;padding:22px 0;display:flex;justify-content:space-between;gap:20px;align-items:flex-start;font-size:18px;font-weight:600;letter-spacing:-.012em}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary:after{content:"+";font-family:'JetBrains Mono',monospace;font-size:22px;color:var(--amber);line-height:1;flex:none}
+  .faq details[open] summary:after{content:"–"}
+  .faq .ans{padding:0 0 24px;max-width:52em;color:#4A4F58;font-size:16.5px}
+  .aq{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .aq-item{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+  .aq-item h3{font-size:17.5px;font-weight:700;margin-bottom:8px}
+  .aq-item p{font-size:15px;color:#4A4F58}
+  @media (max-width:980px){.tech,.proof,.aq{grid-template-columns:1fr}.faq summary{font-size:16.5px}}
+</style>
+
+<style>
+  .dash{background:#0B0E12;border-radius:20px;padding:14px;box-shadow:0 30px 70px rgba(13,16,20,.22)}
+  .dash-top{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:8px 8px 16px;flex-wrap:wrap}
+  .dash-title{display:flex;align-items:center;gap:12px;color:#fff}
+  .dash-dots{display:flex;gap:6px}
+  .dash-dots i{width:10px;height:10px;border-radius:50%;background:#2C323C;display:block}
+  .dash-dots i:first-child{background:#E7952A}
+  .dash-name{font-size:14.5px;font-weight:600}
+  .dash-sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:#8E96A2;letter-spacing:.06em}
+  .seg{display:flex;gap:6px;flex-wrap:wrap}
+  .seg button{background:#1A1F27;border:1px solid #2A2F38;color:#C3C9D2;border-radius:9px;padding:8px 13px;font-family:inherit;font-size:13.5px;cursor:pointer;transition:.12s}
+  .seg button:hover{border-color:#3C434F;color:#fff}
+  .seg button.on{background:var(--amber);border-color:var(--amber);color:#231703;font-weight:600}
+  .dash-inner{background:var(--paper-2);border-radius:12px;padding:22px}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+  .kpi{border:1px solid var(--line);border-radius:12px;padding:16px 16px 14px;background:var(--paper)}
+  .kpi .lab{font-size:12.5px;color:var(--muted);margin-bottom:9px}
+  .kpi .val{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;letter-spacing:-.02em;line-height:1}
+  .kpi .foot{font-size:12px;color:var(--muted);margin-top:8px}
+  .kpi.hi{background:var(--amber-soft);border-color:#EBD3A8}
+  .kpi.hi .val{color:#8A5A0B}
+  .dash-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:14px;margin-bottom:16px}
+  .panel{border:1px solid var(--line);border-radius:12px;padding:18px}
+  .panel h4{font-size:13px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:16px}
+  .fn{display:grid;gap:10px}
+  .fn-row{display:grid;grid-template-columns:132px 1fr 40px;align-items:center;gap:12px;font-size:14px}
+  .fn-bar{height:22px;background:#F1EFEA;border-radius:6px;overflow:hidden}
+  .fn-bar i{display:block;height:100%;background:linear-gradient(90deg,#F0B463,var(--amber));border-radius:6px;transition:width .35s ease}
+  .fn-row b{font-family:'JetBrains Mono',monospace;text-align:right;font-weight:700}
+  .ch{display:grid;gap:12px}
+  .ch-row{display:grid;grid-template-columns:1fr;gap:6px}
+  .ch-top{display:flex;justify-content:space-between;font-size:14px}
+  .ch-top b{font-family:'JetBrains Mono',monospace}
+  .ch-track{height:8px;background:#F1EFEA;border-radius:5px;overflow:hidden}
+  .ch-track i{display:block;height:100%;background:var(--ink);border-radius:5px;transition:width .35s ease}
+  table.dt{width:100%;border-collapse:collapse;font-size:14.5px}
+  table.dt th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;padding:0 10px 12px 0;border-bottom:1px solid var(--line)}
+  table.dt td{padding:13px 10px 13px 0;border-bottom:1px solid var(--line);vertical-align:top}
+  table.dt tr:last-child td{border-bottom:none}
+  table.dt .r{font-family:'JetBrains Mono',monospace;font-weight:700}
+  .st{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-size:12.5px;font-weight:600;white-space:nowrap}
+  .st.out{background:var(--green-soft);color:var(--green)}
+  .st.prog{background:#FFF4E2;color:#A06808}
+  .st.wait{background:#EEF1F5;color:#5A6270}
+  .dash-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 6px 4px;flex-wrap:wrap;color:#8E96A2;font-size:13px}
+  .dash-foot .mono{font-size:12px}
+  .dash-note{font-size:13.5px;color:var(--muted);margin-top:14px;line-height:1.55}
+  .dbul{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+  .dbul-item{border:1px solid var(--line);border-radius:var(--r);padding:20px;background:var(--paper-2)}
+  .dbul-item h4{font-size:16.5px;font-weight:700;margin-bottom:7px}
+  .dbul-item p{font-size:14.5px;color:#4A4F58}
+  .dt-wrap{overflow-x:auto}
+  .swipe{display:none;font-size:12.5px;color:var(--muted);margin-top:10px}
+  .dt-wrap::-webkit-scrollbar{height:6px}
+  .dt-wrap::-webkit-scrollbar-thumb{background:#D8D4CC;border-radius:3px}
+  @media (max-width:980px){.swipe{display:block}table.dt{min-width:660px}.kpis{grid-template-columns:1fr 1fr}.dash-grid,.dbul{grid-template-columns:1fr}.fn-row{grid-template-columns:104px 1fr 34px;font-size:13px}.dash-inner{padding:14px}}
+</style>
+<style>
+  @media (min-width:981px){ .hero h1{font-size:clamp(30px,3.35vw,45px);line-height:1.12} }
+</style>
+<style>
+  .cred dd .sub{display:block;font-size:12.5px;font-weight:400;color:#9AA1AC;margin-top:5px;line-height:1.35}
+</style>
+<style>
+  .linkbtn{background:none;border:none;padding:0;font:inherit;color:inherit;cursor:pointer;
+    border-bottom:1px dashed rgba(107,111,120,.6);transition:border-color .15s,color .15s}
+  .linkbtn:hover{color:var(--ink);border-bottom-color:var(--ink)}
+  .modal{display:none;position:fixed;inset:0;z-index:200;background:rgba(10,12,16,.6);overflow:auto;padding:26px 18px}
+  .modal.open{display:block}
+  body.modal-open{overflow:hidden}
+  .modal-card{background:var(--paper-2);border-radius:20px;max-width:760px;margin:3vh auto;padding:34px 36px 30px;box-shadow:0 34px 90px rgba(0,0,0,.4);position:relative}
+  .modal-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+  .modal-card h3{font-size:28px;font-weight:800;letter-spacing:-.024em;line-height:1.15;margin-bottom:12px;max-width:22em}
+  .modal-card .ml{font-size:16.5px;color:#4A4F58;max-width:44em}
+  .mclose{position:absolute;top:18px;right:18px;width:40px;height:40px;border-radius:11px;border:1px solid var(--line);background:var(--paper);
+    font-size:19px;line-height:1;cursor:pointer;color:#4A4F58}
+  .mclose:hover{border-color:var(--ink);color:var(--ink)}
+  .psteps{display:grid;gap:16px;margin:26px 0 6px}
+  .pstep{display:grid;grid-template-columns:30px 1fr;gap:14px}
+  .pstep .n{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--amber);padding-top:5px}
+  .pstep h4{font-size:17px;font-weight:700;margin-bottom:5px}
+  .pstep p{font-size:15.5px;color:#4A4F58}
+  .mfoot{display:flex;align-items:center;gap:18px;flex-wrap:wrap;border-top:1px solid var(--line);margin-top:26px;padding-top:22px}
+  .mfoot .note{font-size:13.5px;color:var(--muted)}
+  @media (max-width:640px){.modal{padding:14px}.modal-card{padding:24px 20px;border-radius:16px}.mclose{top:12px;right:12px}}
+</style>
+<style>
+  .src{font-size:13px;color:var(--muted);margin-top:20px}
+</style>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#101318">
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="/" class="logo" aria-label="6 разряд — на главную"><span class="mark">6</span> 6разряд</a>
+    <nav class="nav-links">
+      <a href="/">Главная</a>
+      <a href="/employers/">Работодателям</a>
+      <a href="/colleges/" aria-current="page">Колледжам</a>
+      <a href="/workers/">Рабочим</a>
+    </nav>
+    <a href="#zayavka" class="btn btn-ink btn-sm">Обсудить пилот</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">AI-платформа найма квалифицированных рабочих · колледжам и центрам карьеры</div>
+      <h1>Вы отвечаете за трудоустройство выпускников. А мы помогаем вам с работодателями, вакансиями и <em>отчётностью для мониторинга</em></h1>
+      <p class="lede">Для колледжей, где готовят сварщиков, монтажников, электромонтёров и крановщиков. Считаем не отклики и не ярмарки, а подтверждённые выходы — по каждому выпускнику. С колледжа не берём ни рубля.</p>
+      <div class="cta-row">
+        <a href="#zayavka" class="btn btn-amber">Обсудить пилот</a>
+        <a href="#why" class="btn btn-ghost">Что это даёт колледжу</a>
+      </div>
+      <div class="terms">
+        <span><i class="dot"></i> без бюджета со стороны колледжа</span>
+        <span><i class="dot"></i> <button type="button" class="linkbtn" onclick="openPilot()">пилот на вашем колледже</button></span>
+      </div>
+    </div>
+
+    <div class="cred-stack">
+      <div class="cred">
+        <div class="cred-head">
+          <span class="mono" style="font-size:11.5px;letter-spacing:.14em;color:#9AA1AC">ВЫГРУЗКА ДЛЯ ЦСТВ</span>
+          <span class="mono" style="font-size:11.5px;color:#9AA1AC">ПРИМЕР ВЫГРУЗКИ</span>
+        </div>
+        <dl>
+          <div class="cred-row"><dt>Колледж</dt><dd>26КАДР<span class="sub">Колледж архитектуры, дизайна и реинжиниринга № 26</span></dd></div>
+          <div class="cred-row"><dt>Выпускник</dt><dd>Сварщик · 5 разряд</dd></div>
+          <div class="cred-row"><dt>Допуски</dt><dd>НАКС НГДО</dd></div>
+          <div class="cred-row"><dt>Работодатель</dt><dd>МСУ-1</dd></div>
+          <div class="cred-row"><dt>Регион</dt><dd>Москва</dd></div>
+          <div class="cred-row"><dt>Дата выхода</dt><dd>10.11.2026</dd></div>
+        </dl>
+        <div class="stamp">✓ Готово к вашей отчётности</div>
+        <p class="cred-note">Это то, что ЦСТВ собирает вручную три года: обзвон, анкеты, потерянные выпускники. Мы отдаём это выгрузкой из своего контура — по вашим людям, в вашем формате.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="why">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Почему это узкое место</div>
+      <h2>Трудоустройство выпускников — самая важная часть работы колледжа</h2>
+      <p>Три причины, по которым обычно всё держится на энтузиазме одного сотрудника ЦСТВ.</p>
+    </div>
+    <div class="strip">
+      <div class="strip-item">
+        <div class="strip-num">01 / ТРИ ГОДА</div>
+        <h3>Мониторинг не заканчивается на выпуске</h3>
+        <p>ЦСТВ обязан отслеживать занятость выпускников три года. Значит, важнее всего связь с выпускниками и контакты с работодателями — а это обзвон и анкеты.</p>
+      </div>
+      <div class="strip-item">
+        <div class="strip-num">02 / ЗАНЯТОСТЬ ≠ ПРОФЕССИЯ</div>
+        <h3>Трудоустройство и работа по профессии — не одно и то же</h3>
+        <p>Занятость выпускников СПО высокая — 82–83,4%. Но, по данным НИУ ВШЭ, 40% специалистов среднего звена и 44% квалифицированных рабочих работают не по полученной профессии. Диплом есть — работы по разряду может и не быть.</p>
+      </div>
+      <div class="strip-item">
+        <div class="strip-num">03 / ПОИСК РАБОТОДАТЕЛЕЙ</div>
+        <h3>Без нас это делается вручную</h3>
+        <p>Искать предприятия под каждую специальность колледж вынужден сам: звонки, письма, ожидание ответа. Мы приходим с работодателями, которым нужны именно ваши выпускники.</p>
+      </div>
+    </div>
+    <p class="src">Источник: НИУ ВШЭ, «Индикаторы российского образования», 2026</p>
+  </div>
+</section>
+
+<section class="dark" id="tech">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow on-dark">Технология</div>
+      <h2>Почему это платформа, а не агентство</h2>
+      <p>Мы не подбираем персонал руками. Профиль собирает AI-собеседник, сопоставление считает алгоритм, а каждая вакансия становится данными о рынке — в том числе для вашего колледжа.</p>
+    </div>
+    <div class="tech">
+      <div class="tech-item">
+        <span class="n">01 / AI-СОБЕСЕДНИК</span>
+        <h3>Профиль вместо анкеты</h3>
+        <p>Выпускник пишет в MAX одной строкой: «я сварщик, 5 разряд, НАКС, хочу вахту в Тюмень». Бот сам достаёт профессию, разряд, допуски, регион и формат. Понимает и голосовые. Резюме не нужно.</p>
+      </div>
+      <div class="tech-item">
+        <span class="n">02 / МАТЧИНГ</span>
+        <h3>Профессия → разряд → допуски</h3>
+        <p>Не поиск по ключевым словам вакансии. Сварщик 5 разряда с НАКС и сварщик 3 разряда без допуска — разные деньги и разные объекты. Разряд у нас отдельное поле, а не строчка в тексте.</p>
+      </div>
+      <div class="tech-item">
+        <span class="n">03 / ВЕРИФИКАЦИЯ</span>
+        <h3>Документ, а не слово «опытный»</h3>
+        <p>Разряд и допуски сверяются с удостоверением. Вакансии тоже проверяем: зарплата, разряд и условия указываются явно — цифра заносится в базу и попадает в аналитику.</p>
+      </div>
+      <div class="tech-item">
+        <span class="n">04 / АНАЛИТИКА</span>
+        <h3>Рынок как побочный продукт</h3>
+        <p>Каждая вакансия и каждый выход — данные: сколько платят по профессии, какой разряд спрашивают, где спрос. Колледж получает срез по своим специальностям и региону.</p>
+      </div>
+    </div>
+    <div class="claim">
+      <b>Мы технологическая компания.</b> У нас не менеджеры с блокнотом, а платформа: база рабочих с подтверждённой квалификацией, алгоритм сопоставления и данные по рынку. Колледж получает доступ к этому контуру — и отчётность как следствие.
+    </div>
+  </div>
+</section>
+
+<section class="dark">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow on-dark">Что вы получаете</div>
+      <h2>Четыре вещи, за которые колледж ничего не платит</h2>
+      <p>Платят работодатели — за вышедшего на работу человека. Это не благотворительность: нам нужен доступ к выпускникам, вам — результат по трудоустройству.</p>
+    </div>
+    <div class="benefits">
+      <div class="benefit">
+        <span class="n">01</span>
+        <h3>Трудоустройство по специальности и разряду</h3>
+        <p>Не ярмарка вакансий, а конкретные рабочие места с подтверждённой зарплатой, разрядом и допусками. Ведём выпускника до выхода на работу.</p>
+      </div>
+      <div class="benefit">
+        <span class="n">02</span>
+        <h3>Выгрузка для ЦСТВ</h3>
+        <p>Кто устроился, куда, в каком разряде и когда. Готово к вашему мониторингу — вместо обзвона через полгода.</p>
+      </div>
+      <div class="benefit">
+        <span class="n">03</span>
+        <h3>Работодатели-партнёры</h3>
+        <p>Приводим предприятия под практику, целевое трудоустройство и наставничество — то, что требует профессионалитет.</p>
+      </div>
+      <div class="benefit">
+        <span class="n">04</span>
+        <h3>Аналитика по региону</h3>
+        <p>Зарплаты и спрос по профессиям: показывать студентам и родителям, защищать набор и свои специальности.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Что это даёт выпускнику</div>
+      <h2>Выпускник идёт на конкретное предприятие</h2>
+      <p>Родители и студенты спрашивают одно и то же: куда я попаду после диплома и не бросят ли меня там. Ответ должен быть проверяемым.</p>
+    </div>
+    <div class="trio">
+      <div class="tcard">
+        <span class="n">ПРЕДПРИЯТИЯ</span>
+        <h3>Работодатели проверены</h3>
+        <p>Вакансии прямых работодателей — с зафиксированными условиями. Собранные с рынка помечаем отдельно: не выдаём чужое объявление за своё.</p>
+      </div>
+      <div class="tcard">
+        <span class="n">УСЛОВИЯ</span>
+        <h3>Условия зафиксированы до выезда</h3>
+        <p>Зарплата, разряд, вахта, жильё, суточные, дата. Выпускник не едет на объект «на удачу» и не узнаёт условия на месте.</p>
+      </div>
+      <div class="tcard">
+        <span class="n">ВЫХОДЫ</span>
+        <h3>Выходы подтверждены</h3>
+        <p>У ЦСТВ на руках факт: кто, куда, в каком разряде и когда вышел. Это то, что идёт в ваш мониторинг, и то, за что не стыдно перед родителями.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Что получает ЦСТВ на руки</div>
+      <h2>Как выпускник попадает в базу и что вы получаете на выходе</h2>
+      <p>Слева — живой диалог бота «Профессионал» в MAX. Справа — выгрузка по вашим выпускникам, готовая к мониторингу.</p>
+    </div>
+    <div class="proof">
+      <div>
+        <div class="chat">
+          <div class="chat-head">
+            <div class="chat-ava">П</div>
+            <div>
+              <div class="chat-name">Профессионал</div>
+              <div class="chat-sub">бот в MAX · работает прямо сейчас</div>
+            </div>
+          </div>
+          <div class="bub bot">Кто вы по профессии?
+            <div class="btnline"><span class="kb">Сварщик</span><span class="kb">Монтажник</span><span class="kb">Электромонтёр</span><span class="kb">Другая</span></div>
+          </div>
+          <div class="bub me">Я сварщик, 5 разряд, НАКС есть — хочу вахту, Тюмень</div>
+          <div class="bub bot">Записал: <b>сварщик · 5 разряд · НАКС · вахта · Тюмень</b>. Разряд подтвердите удостоверением — пришлите фото. Пока вот что есть под ваш разряд:
+            <div class="btnline"><span class="kb">3 вакансии с зарплатой</span></div>
+          </div>
+        </div>
+        <p class="chat-cap">Профиль собирается из одного сообщения — без анкет на десять экранов. Логин и пароль выпускнику не нужны: он пишет в мессенджер, который у него уже установлен.</p>
+      </div>
+      <div class="stack">
+        <div class="cred" style="transform:none">
+          <div class="cred-head">
+            <span class="mono" style="font-size:11.5px;letter-spacing:.14em;color:#9AA1AC">ВЫГРУЗКА · CSV / XLSX</span>
+            <span class="mono" style="font-size:11.5px;color:#9AA1AC">ПО ВАШИМ ВЫПУСКНИКАМ</span>
+          </div>
+          <dl>
+            <div class="cred-row"><dt>Кто</dt><dd>профессия и разряд</dd></div>
+            <div class="cred-row"><dt>Куда</dt><dd>работодатель и регион</dd></div>
+            <div class="cred-row"><dt>Когда</dt><dd>дата выхода и статус</dd></div>
+            <div class="cred-row"><dt>Допуски</dt><dd>НАКС, высота, электрика</dd></div>
+          </dl>
+          <div class="stamp">✓ статус подтверждает работодатель</div>
+          <p class="cred-note">Статус «устроен» ставим не со слов выпускника, а по подтверждению от работодателя — в этом разница между отчётом и реальностью.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Что просим взамен</div>
+      <h2>Три вещи, которые не стоят денег</h2>
+      <p>Мы не просим бюджет, не просим персональные данные студентов и не продаём вам софт.</p>
+    </div>
+    <div class="ask">
+      <div class="ask-item">
+        <span class="n">01</span>
+        <h3>10–15 минут разговора</h3>
+        <p>С ЦСТВ или замом по УПР — не обязательно с директором на первом шаге.</p>
+      </div>
+      <div class="ask-item">
+        <span class="n">02</span>
+        <h3>Доступ к выпускным группам</h3>
+        <p>QR и бот в чатах групп плюс стенд в ЦСТВ: выпускник сам присылает профессию и телефон.</p>
+      </div>
+      <div class="ask-item">
+        <span class="n">03</span>
+        <h3>Партнёрское письмо</h3>
+        <p>Официальное подтверждение сотрудничества — оно идёт в вашу отчётность, не нам.</p>
+      </div>
+    </div>
+    <div class="nofee">
+      <h3>Про деньги: с колледжа — ноль</h3>
+      <p>Ни за пилот, ни потом. Платит работодатель, и только за вышедшего на работу человека. У колледжа бюджета на это нет — и мы его не просим.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Дашборд ЦСТВ</div>
+      <h2>Ваш выпуск — одним экраном</h2>
+      <p>То, что сейчас собирается обзвоном и анкетами: кто получил вакансии, кто вышел, по каким профессиям и с какой зарплатой. Цифры берутся из подтверждённых выходов, а не из самоотчётов выпускников.</p>
+    </div>
+
+    <div class="dash">
+      <div class="dash-top">
+        <div class="dash-title">
+          <div class="dash-dots"><i></i><i></i><i></i></div>
+          <div>
+            <div class="dash-name">Дашборд ЦСТВ · ГБПОУ «…»</div>
+            <div class="dash-sub">ВЫПУСК 2026 · ОБНОВЛЕНО ПО ФАКТУ ВЫХОДА</div>
+          </div>
+        </div>
+        <div class="seg" id="seg">
+          <button class="on" data-k="all">Все специальности</button>
+          <button data-k="welder">Сварщики</button>
+          <button data-k="fitter">Монтажники</button>
+          <button data-k="electrician">Электромонтёры</button>
+        </div>
+      </div>
+
+      <div class="dash-inner">
+        <div class="kpis">
+          <div class="kpi"><div class="lab">Выпускников в базе</div><div class="val" id="k-base">128</div><div class="foot">профиль собрал бот</div></div>
+          <div class="kpi"><div class="lab">Получили предложения вакансий</div><div class="val" id="k-off">112</div><div class="foot">с указанной зарплатой и разрядом</div></div>
+          <div class="kpi hi"><div class="lab">Вышли на работу</div><div class="val" id="k-out">61</div><div class="foot" id="k-conv">48% от выпуска</div></div>
+          <div class="kpi"><div class="lab">Медианный срок до выхода</div><div class="val" id="k-days">21</div><div class="foot">день от профиля до объекта</div></div>
+        </div>
+
+        <div class="dash-grid">
+          <div class="panel">
+            <h4>Воронка выпуска</h4>
+            <div class="fn" id="funnel"></div>
+          </div>
+          <div class="panel">
+            <h4>Медианная зарплата по профессиям</h4>
+            <div class="ch" id="chart"></div>
+          </div>
+          <p class="swipe">Таблица прокручивается вбок →</p>
+        </div>
+
+        <div class="panel" style="padding:18px 18px 8px">
+          <h4>Выпускники и подтверждённые выходы</h4>
+          <div class="dt-wrap">
+            <table class="dt">
+              <thead><tr><th>Профессия</th><th>Разряд</th><th>Допуски</th><th>Работодатель</th><th>Регион</th><th>Статус</th></tr></thead>
+              <tbody id="rows"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-foot">
+        <span class="mono">ВЫГРУЗКА · XLSX / CSV · ФОРМАТ МОНИТОРИНГА ЦСТВ</span>
+        <span>Данные обновляются по каждому подтверждённому выходу</span>
+      </div>
+    </div>
+
+    <p class="dash-note">Это макет интерфейса: цифры демонстрационные. На пилоте дашборд соберём на ваших выпускниках — по профессиям, разрядам, допускам и регионам, с выгрузкой в формате вашего мониторинга.</p>
+
+    <div class="dbul">
+      <div class="dbul-item"><h4>Срез по профессиям и разрядам</h4><p>Видно, где выпуск реально востребован, а где нет — с разбивкой по разряду и допускам.</p></div>
+      <div class="dbul-item"><h4>Сроки до выхода</h4><p>Сколько дней проходит от первого сообщения выпускника до выхода на объект. Это метрика, которую видно.</p></div>
+      <div class="dbul-item"><h4>Выгрузка для отчёта</h4><p>XLSX или CSV в формате вашего мониторинга — без ручного сбора и звонков через полгода.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Вопросы</div>
+      <h2>Что обычно спрашивают на встрече</h2>
+    </div>
+    <div class="faq">
+      <details><summary>Сколько это стоит колледжу?</summary><div class="ans">Ноль. Ни за пилот, ни после. Платит работодатель и только за вышедшего на работу человека. Тарифов, подписок и пакетов для колледжа не существует.</div></details>
+      <details><summary>Какие данные выпускников вы просите?</summary><div class="ans">Профессию, разряд, допуски, регион и телефон. Остальное выпускник сообщает боту сам и по своему согласию. Паспорта, СНИЛС и медкнижки мы не собираем: это спецкатегории данных, и для подбора они не нужны.</div></details>
+      <details><summary>Нужно что-то внедрять, менять учебный план?</summary><div class="ans">Нет. Мы не образовательная платформа и не трогаем учебный процесс. От вас — QR и бот в чатах выпускных групп плюс стенд в ЦСТВ. Дальше выпускник работает с ботом сам.</div></details>
+      <details><summary>Кто ведёт это с нашей стороны?</summary><div class="ans">ЦСТВ или зам. по УПР. На старте — 10–15 минут разговора. Дальше вы получаете выгрузки по своим выпускникам, ежедневных задач у сотрудника не появляется.</div></details>
+      <details><summary>А если выпускник не устроится?</summary><div class="ans">Колледж ничего не теряет: вакансии и причины отказа остаются у вас, мы не берём денег за попытки и не пишем отчёты за вас. Поэтому первый шаг — <button type="button" class="linkbtn" onclick="openPilot()">пилот на вашем колледже</button>: одна специальность или одна группа.</div></details>
+      <details><summary>Вы гарантируете трудоустройство?</summary><div class="ans">Нет, и никто не может. Мы даём доступ к работодателям, проверенные вакансии и ведём выпускника до выхода. Решение принимают обе стороны — предприятие и человек.</div></details>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="pilot">
+      <div>
+        <div class="eyebrow on-dark">Пилот</div>
+        <h2>Пилот на вашем колледже — и один честный замер</h2>
+        <p>Начинаем с пилота на вашем колледже. Ничего не просим подписывать заранее и не обещаем цифр, которых у нас нет.</p>
+        <div class="metric">Метрика пилота —<br>сколько выпускников получили вакансии и вышли на работу</div>
+        <p style="margin-top:18px"><button type="button" class="linkbtn" style="color:#E7952A;border-bottom-color:rgba(231,149,42,.55)" onclick="openPilot()">Что значит пилот — по шагам →</button></p>
+      </div>
+      <div style="text-align:center">
+        <a href="#zayavka" class="btn btn-amber" style="width:100%">Обсудить пилот</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="form-band" id="zayavka">
+  <div class="wrap" style="padding-top:70px;padding-bottom:70px">
+    <div class="form-grid">
+      <div>
+        <div class="eyebrow">Заявка</div>
+        <h2>Расскажите про колледж</h2>
+        <p style="color:#4A4F58">Перезвоним и предложим конкретный пилот: сколько выпускников, по каким специальностям, что нужно для старта.</p>
+        <p style="color:var(--muted);font-size:14.5px;margin-top:22px">Отвечаем в течение рабочего дня. Заявка уходит напрямую в наш Telegram.</p>
+      </div>
+
+      <div class="form-card">
+        <form id="lead" onsubmit="return false">
+          <div class="fstep active" data-step="1">
+            <div class="fstep-label">Шаг 1 из 2 · Колледж</div>
+            <h3>Основное</h3>
+            <div class="fields">
+              <div class="fld"><label>Название колледжа</label><input type="text" placeholder="ГБПОУ «…»"></div>
+              <div class="field-row">
+                <div class="fld"><label>Город</label><input type="text" placeholder="Москва"></div>
+                <div class="fld"><label>Выпуск в год</label>
+                  <select><option>до 50</option><option>50–150</option><option>150–300</option><option>больше 300</option></select>
+                </div>
+              </div>
+              <div class="fld"><label>Специальности и профессии</label><input type="text" placeholder="Сварщик, монтажник, электромонтёр"></div>
+            </div>
+            <div class="form-foot">
+              <button type="button" class="btn btn-amber" onclick="goStep(2)">Далее</button>
+              <span class="note">Согласие на обработку данных — <a href="#" style="text-decoration:underline">политика</a></span>
+            </div>
+          </div>
+
+          <div class="fstep" data-step="2">
+            <div class="fstep-label">Шаг 2 из 2 · Контакт</div>
+            <h3>Кто отвечает за трудоустройство</h3>
+            <div class="fields">
+              <div class="field-row">
+                <div class="fld"><label>ФИО</label><input type="text" placeholder="Имя и фамилия"></div>
+                <div class="fld"><label>Должность</label><input type="text" placeholder="ЦСТВ / зам. по УПР"></div>
+              </div>
+              <div class="field-row">
+                <div class="fld"><label>Телефон</label><input type="tel" placeholder="+7 900 000-00-00"></div>
+                <div class="fld"><label>E-mail</label><input type="email" placeholder="name@college.ru"></div>
+              </div>
+            </div>
+            <div class="form-foot">
+              <button type="button" class="btn btn-amber" onclick="goStep(3)">Отправить</button>
+            </div>
+            <button type="button" class="back" onclick="goStep(1)">← Назад</button>
+          </div>
+
+          <div class="done" id="done">
+            <div class="tick">✓</div>
+            <h3 style="font-size:22px;font-weight:700;margin-bottom:10px">Заявка принята</h3>
+            <p style="color:#4A4F58">Позвоним с 9:00 до 19:00 МСК и предложим пилот. Если срочно — <a href="tel:+79253560809" style="text-decoration:underline">8 925 356-08-09</a>.</p>
+            <p style="font-size:13.5px;color:var(--muted);margin-top:18px">Демо-версия формы: заявка пока не уходит, покажем после подключения приёма в Telegram.</p>
+            <button type="button" class="back" onclick="resetForm()">← Заполнить ещё одну</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand"><span class="mark">6</span> 6разряд</div>
+        <p style="max-width:26em;color:#B4BAC4;font-size:15px">AI-платформа найма квалифицированных рабочих для строительной отрасли. Разряд и допуски подтверждены документом. 6razryad.ru</p>
+      </div>
+      <div>
+        <h4>Связаться</h4>
+        <a href="tel:+79253560809">8 925 356-08-09</a>
+        <a href="https://t.me/khayrbek">тг. @khayrbek</a>
+      </div>
+      <div>
+        <h4>Документы</h4>
+        <a href="#">Политика обработки данных</a>
+        <a href="#">Согласие на обработку</a>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2026 · ООО «6разряд»</span>
+      <span class="mono">6razryad.ru/colleges</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function showStep(n){
+    document.querySelectorAll('.fstep').forEach(s=>s.classList.toggle('active', +s.dataset.step===n));
+    document.getElementById('done').classList.remove('active');
+  }
+  function goStep(n){
+    if(n===3){ document.querySelectorAll('.fstep').forEach(s=>s.classList.remove('active')); document.getElementById('done').classList.add('active'); return; }
+    showStep(n);
+  }
+  function resetForm(){ document.querySelectorAll('#lead input').forEach(i=>i.value=''); showStep(1); }
+</script>
+<script>
+const D = {
+  all:{base:128,off:112,out:61,days:21,
+    funnel:[['Профиль в базе',128],['Предложены вакансии',112],['Отклик',88],['Интервью',72],['Выход на работу',61]],
+    chart:[['Крановщик · 6 разряд',145000],['Сварщик · 5 разряд',138000],['Монтажник · 4 разряд',112000],['Электромонтёр · 4 разряд',96000]],
+    rows:[
+      ['Сварщик','5','НАКС НГДО','подрядчик СМР','Тюмень','out','Вышел 12.09'],
+      ['Монтажник ЖБК','4','высота','монтажная организация','Москва','out','Вышел 08.09'],
+      ['Электромонтёр','4','электробезопасность IV','эксплуатация','ХМАО','out','На объекте'],
+      ['Сварщик','4','НАКС НГДО','подрядчик СМР','ЯНАО','prog','Выход согласован'],
+      ['Крановщик','6','автокран 10–20 т','механизация','Москва','prog','Подтверждён выход'],
+      ['Монтажник МК','5','высота, стропальщик','подрядчик СМР','Санкт-Петербург','wait','Назначено интервью']
+    ]},
+  welder:{base:62,off:56,out:34,days:18,
+    funnel:[['Профиль в базе',62],['Предложены вакансии',56],['Отклик',44],['Интервью',37],['Выход на работу',34]],
+    chart:[['Сварщик · 6 разряд',152000],['Сварщик · 5 разряд',138000],['Сварщик · 4 разряд',121000],['Сварщик · 3 разряд',99000]],
+    rows:[
+      ['Сварщик','5','НАКС НГДО','подрядчик СМР','Тюмень','out','Вышел 12.09'],
+      ['Сварщик','4','НАКС НГДО','подрядчик СМР','ЯНАО','prog','Выход согласован'],
+      ['Сварщик','3','без допуска','монтажная организация','Москва','wait','Назначено интервью']
+    ]},
+  fitter:{base:38,off:33,out:17,days:24,
+    funnel:[['Профиль в базе',38],['Предложены вакансии',33],['Отклик',26],['Интервью',20],['Выход на работу',17]],
+    chart:[['Монтажник МК · 5 разряд',126000],['Монтажник ЖБК · 4 разряд',112000],['Монтажник ЖБК · 3 разряд',94000],['Монтажник МК · 6 разряд',141000]],
+    rows:[
+      ['Монтажник ЖБК','4','высота','монтажная организация','Москва','out','Вышел 08.09'],
+      ['Монтажник МК','5','высота, стропальщик','подрядчик СМР','Санкт-Петербург','wait','Назначено интервью'],
+      ['Монтажник ЖБК','3','без допуска','подрядчик СМР','Тюмень','prog','Выход согласован']
+    ]},
+  electrician:{base:28,off:23,out:10,days:19,
+    funnel:[['Профиль в базе',28],['Предложены вакансии',23],['Отклик',18],['Интервью',15],['Выход на работу',10]],
+    chart:[['Электромонтёр · 5 разряд',118000],['Электромонтёр · 4 разряд',96000],['Электромонтёр · 3 разряд',84000],['Электромонтёр · 6 разряд',132000]],
+    rows:[
+      ['Электромонтёр','4','электробезопасность IV','эксплуатация','ХМАО','out','На объекте'],
+      ['Электромонтёр','3','электробезопасность III','эксплуатация','Москва','prog','Выход согласован'],
+      ['Электромонтёр','5','электробезопасность IV','подрядчик СМР','ЯНАО','wait','Назначено интервью']
+    ]}
+};
+const ST={out:['out','Вышел'],prog:['prog','В процессе'],wait:['wait','Ожидает']};
+function fmt(n){return n.toLocaleString('ru-RU')}
+function render(k){
+  const d=D[k];
+  document.getElementById('k-base').textContent=d.base;
+  document.getElementById('k-off').textContent=d.off;
+  document.getElementById('k-out').textContent=d.out;
+  document.getElementById('k-days').textContent=d.days;
+  document.getElementById('k-conv').textContent=Math.round(d.out/d.base*100)+'% от выпуска';
+  const max=d.funnel[0][1];
+  document.getElementById('funnel').innerHTML=d.funnel.map(([l,v])=>
+    '<div class="fn-row"><span>'+l+'</span><span class="fn-bar"><i style="width:'+(v/max*100).toFixed(1)+'%"></i></span><b>'+v+'</b></div>').join('');
+  const mxs=Math.max(...d.chart.map(c=>c[1]));
+  document.getElementById('chart').innerHTML=d.chart.map(([l,v])=>
+    '<div class="ch-row"><div class="ch-top"><span>'+l+'</span><b>'+fmt(v)+' ₽</b></div><span class="ch-track"><i style="width:'+(v/mxs*100).toFixed(1)+'%"></i></span></div>').join('');
+  document.getElementById('rows').innerHTML=d.rows.map(r=>
+    '<tr><td>'+r[0]+'</td><td class="r">'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td>'+r[4]+'</td><td><span class="st '+ST[r[5]][0]+'">'+r[6]+'</span></td></tr>').join('');
+}
+document.querySelectorAll('#seg button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#seg button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); render(b.dataset.k);
+}));
+render('all');
+</script>
+
+<div class="modal" id="pilot-modal" role="dialog" aria-modal="true" aria-labelledby="pilot-title" onclick="if(event.target===this)closePilot()">
+  <div class="modal-card">
+    <button class="mclose" id="pilot-close" onclick="closePilot()" aria-label="Закрыть">×</button>
+    <div class="modal-eyebrow">Пилот</div>
+    <h3 id="pilot-title">Пилот на вашем колледже — что это значит</h3>
+    <p class="ml">Проверка на живых выпускниках вашего колледжа. Без договора, без бюджета с вашей стороны и без изменений в учебном процессе.</p>
+
+    <div class="psteps">
+      <div class="pstep"><span class="n">01</span><div>
+        <h4>Что нужно от колледжа</h4>
+        <p>15 минут разговора с ЦСТВ или замом по УПР. QR и бот в чатах одной-двух выпускных групп, место на стенде в ЦСТВ. Больше ничего — учебные планы и расписания мы не трогаем.</p>
+      </div></div>
+      <div class="pstep"><span class="n">02</span><div>
+        <h4>Что делаем мы</h4>
+        <p>Собираем профили выпускников: профессия, разряд, допуски, регион, формат работы. Подбираем вакансии работодателей по разряду и допускам, ведём выпускника до выхода и подтверждаем выход у работодателя.</p>
+      </div></div>
+      <div class="pstep"><span class="n">03</span><div>
+        <h4>Что считаем</h4>
+        <p>Три цифры: сколько выпускников пришли в бота, сколько получили вакансии и сколько вышли на работу. Плюс срок от первого сообщения до выхода. Никаких «провели ярмарку вакансий».</p>
+      </div></div>
+      <div class="pstep"><span class="n">04</span><div>
+        <h4>Что получает колледж</h4>
+        <p>Трудоустроенных выпускников и выгрузку по каждому: кто, куда, в каком разряде и когда вышел. В формате, который идёт в ваш мониторинг.</p>
+      </div></div>
+      <div class="pstep"><span class="n">05</span><div>
+        <h4>Сколько это стоит</h4>
+        <p>Ноль. Ни за пилот, ни после. Платит работодатель — и только за человека, который вышел на работу.</p>
+      </div></div>
+      <div class="pstep"><span class="n">06</span><div>
+        <h4>Если не получится</h4>
+        <p>Скажем прямо и покажем цифры. Дальше решаете вы: менять механику или останавливаться. Заранее ничего не подписываем и не просим обязательств.</p>
+      </div></div>
+    </div>
+
+    <div class="mfoot">
+      <a href="#zayavka" class="btn btn-amber" onclick="closePilot()">Обсудить пилот</a>
+      <span class="note">Отвечаем в течение рабочего дня. Перезвоним с 9:00 до 19:00 МСК.</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openPilot(){
+    document.getElementById('pilot-modal').classList.add('open');
+    document.body.classList.add('modal-open');
+    document.getElementById('pilot-close').focus();
+  }
+  function closePilot(){
+    document.getElementById('pilot-modal').classList.remove('open');
+    document.body.classList.remove('modal-open');
+  }
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closePilot(); });
+</script>
+</body>
+</html>
